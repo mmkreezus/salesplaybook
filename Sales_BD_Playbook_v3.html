@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Sales & BD Playbook — Professional Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d0b;--bg2:#131613;--bg3:#191d19;--bg4:#20251f;--bg5:#282d27;
+  --tx:#ecf0eb;--tx2:#b4bfb3;--tx3:#727a70;
+  --bdr:rgba(255,255,255,0.07);--bdr2:rgba(255,255,255,0.14);
+  --green2:#7ab890;--green3:#4a9464;
+  --green:#4a9464;--blue:#4878a8;--red:#a84848;--amber:#c8a040;
+  --r:14px;--rs:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;line-height:1.6;min-height:100vh}
+button,a{cursor:pointer;font-family:'Inter',sans-serif}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
+
+/* === SCREENS === */
+.screen{display:none}.screen.active{display:block}
+
+/* === HEADER === */
+
+.hdr-logo{font-family:'Playfair Display',serif;font-size:15px;color:var(--tx);white-space:nowrap}
+.hdr-logo span{color:var(--green2)}
+.hdr-search{
+  flex:1;display:flex;align-items:center;gap:8px;
+  background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rs);
+  padding:0 10px;height:34px;
+}
+.hdr-search input{flex:1;background:none;border:none;outline:none;color:var(--tx);font-size:13.5px;font-family:'Inter',sans-serif}
+.hdr-search input::placeholder{color:var(--tx3)}
+.hdr-search .sico{color:var(--tx3);font-size:12px}
+
+/* === BACK BAR (prominent) === */
+.back-bar{
+  display:flex;align-items:center;gap:0;
+  background:var(--bg2);border-bottom:1px solid var(--bdr);
+  padding:0;
+}
+.back-btn-big{
+  display:flex;align-items:center;gap:8px;
+  padding:11px 16px;
+  background:none;border:none;color:var(--tx2);font-size:13px;font-weight:500;
+  transition:color .15s;
+}
+.back-btn-big:hover{color:var(--tx)}
+.back-btn-big .arr{font-size:16px;color:var(--green2)}
+.back-bar-title{font-size:13px;color:var(--tx3);padding-right:16px;margin-left:auto}
+
+/* === HOME SCREEN === */
+.home-hero{
+  padding:24px 16px 20px;border-bottom:1px solid var(--bdr);
+  position:relative;overflow:hidden;
+}
+.home-hero::before{
+  content:'';position:absolute;top:-60px;right:-80px;
+  width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(74,148,100,.10) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-tag{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green2);margin-bottom:8px}
+.hero-h{font-family:'Playfair Display',serif;font-size:28px;line-height:1.2;color:var(--tx);margin-bottom:6px}
+.hero-h em{color:var(--green2);font-style:italic}
+.hero-p{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:16px}
+.hero-stats{display:flex;gap:18px}
+.hstat{display:flex;flex-direction:column;gap:1px}
+.hstat-n{font-family:'Playfair Display',serif;font-size:22px;color:var(--tx)}
+.hstat-l{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3)}
+
+/* === PROGRESS === */
+.prog-strip{padding:12px 16px;border-bottom:1px solid var(--bdr)}
+.prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.prog-label{font-size:11px;color:var(--tx3)}
+.prog-pct{font-size:11px;color:var(--green2);font-weight:600}
+.prog-track{height:3px;background:var(--bg5);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--green);border-radius:2px;transition:width .5s}
+.prog-meta{display:flex;gap:14px;margin-top:8px}
+.pmeta{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--tx3)}
+.pmeta-dot{width:6px;height:6px;border-radius:50%}
+
+/* === SECTION LABEL === */
+.sec-lbl{padding:14px 16px 8px;font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3)}
+
+/* === CATEGORY GRID === */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 16px}
+.ccard{
+  background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+  padding:13px;cursor:pointer;transition:border-color .15s,transform .1s;
+  position:relative;overflow:hidden;
+}
+.ccard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ca);opacity:.9}
+.ccard:active{transform:scale(.97)}
+.ccard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px}
+.ccard-icon{font-size:20px;line-height:1}
+.ccard-count{font-size:10px;font-weight:700;color:var(--ca);background:rgba(255,255,255,.06);padding:2px 6px;border-radius:8px}
+.ccard-name{font-size:12.5px;font-weight:600;color:var(--tx);line-height:1.35;margin-bottom:7px}
+.ccard-pb{height:3px;background:var(--bg5);border-radius:2px;overflow:hidden}
+.ccard-pf{height:100%;border-radius:2px;transition:width .4s}
+
+/* === TOPIC LIST (category screen) === */
+.tlist{padding:4px 0}
+.titem{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:13px 16px;border-bottom:1px solid var(--bdr);
+  cursor:pointer;transition:background .12s;
+}
+.titem:hover{background:var(--bg2)}
+.titem-num{font-size:10px;font-weight:700;color:var(--tx3);min-width:20px;margin-top:3px;text-align:right;flex-shrink:0}
+.titem-body{flex:1;min-width:0}
+.titem-title{font-size:14px;font-weight:600;color:var(--tx);line-height:1.35;margin-bottom:3px}
+.titem-intro{font-size:12.5px;color:var(--tx3);font-style:italic;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.titem-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.rdot{width:8px;height:8px;border-radius:50%;background:var(--bg5);margin-top:3px;flex-shrink:0}
+.rdot.read{background:var(--green)}
+.rdot.bkm{background:var(--amber)}
+.titem-arr{font-size:12px;color:var(--tx3)}
+
+/* === READING PAGE === */
+.reading-wrap{padding:0}
+.reading-hero{
+  padding:20px 16px 16px;border-bottom:1px solid var(--bdr);
+  position:relative;
+}
+.reading-cat-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:10px;
+}
+.reading-cat-tag .dot{width:6px;height:6px;border-radius:50%}
+.reading-title{font-family:'Playfair Display',serif;font-size:22px;line-height:1.25;color:var(--tx);margin-bottom:8px}
+.reading-intro{font-size:13.5px;color:var(--tx2);line-height:1.7;font-style:italic}
+
+/* === READING ACTIONS (sticky at bottom) === */
+.reading-actions{
+  position:sticky;
+  bottom:60px;
+  z-index:50;
+  background:rgba(11,13,11,0.99);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--bdr2);
+  border-bottom:1px solid var(--bdr);
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  /* Ensure it never exceeds the column */
+  max-width:720px;
+  width:100%;
+  /* On desktop the app-shell is 720px so this is already correct.
+     The transform trick was causing the misalignment. */
+}
+.btn-read{
+  padding:9px 16px;
+  background:transparent;color:var(--tx2);
+  border:1px solid var(--bdr2);
+  border-radius:var(--rs);font-size:12.5px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all .15s;white-space:nowrap;
+}
+.btn-read:hover{color:var(--tx);border-color:var(--bdr2)}
+.btn-read.done{
+  background:rgba(74,148,100,.15);border-color:var(--green);
+  color:#6ec990;
+}
+.btn-bkm{
+  padding:9px 11px;background:transparent;border:1px solid var(--bdr2);border-radius:var(--rs);
+  font-size:16px;transition:all .15s;color:var(--tx3);
+}
+.btn-bkm.on{background:rgba(74,148,100,.10);border-color:var(--green2);color:var(--green2)}
+.btn-nav-prev{
+  padding:9px 13px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--rs);
+  color:var(--tx2);font-size:14px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;
+}
+.btn-nav-prev:hover{color:var(--tx)}
+.btn-nav-prev:disabled{opacity:.25;cursor:not-allowed}
+.btn-nav-next{
+  flex:1;padding:9px 12px;
+  background:var(--green);color:var(--bg);border:none;
+  border-radius:var(--rs);font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  transition:opacity .15s;min-width:0;
+}
+.btn-nav-next:hover{opacity:.9}
+.btn-nav-next:disabled{opacity:.2;cursor:not-allowed;background:var(--bg4);color:var(--tx3)}
+
+/* === READING CONTENT === */
+.rcontent{padding:0}
+
+.rsection{
+  padding:16px 16px 0;margin-bottom:0;
+  border-bottom:1px solid var(--bdr);
+  padding-bottom:16px;
+}
+.rsection:last-child{border-bottom:none}
+.rsec-label{
+  font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--green2);opacity:.65;margin-bottom:9px;
+  display:flex;align-items:center;gap:7px;
+}
+.rsec-label::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.rsec-body{font-size:14.5px;color:var(--tx);line-height:1.8}
+.rsec-body strong{color:var(--green2);font-weight:600}
+.rsec-body em{font-style:italic;color:var(--tx2)}
+
+/* Key points */
+.kpts{list-style:none;margin-top:4px}
+.kpts li{
+  display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--bdr);
+  font-size:13.5px;color:var(--tx2);line-height:1.65;
+}
+.kpts li:last-child{border-bottom:none}
+.kpts li strong{color:var(--tx);font-weight:600}
+.kpts .pn{font-size:9.5px;font-weight:700;color:var(--green2);min-width:16px;margin-top:5px;flex-shrink:0}
+
+/* Scenario box */
+.scenario{
+  background:rgba(212,146,74,.06);
+  border:1px solid rgba(62,168,90,.18);
+  border-left:3px solid var(--amber);
+  border-radius:0 var(--rs) var(--rs) 0;
+  padding:13px 14px;font-size:14px;color:var(--tx);line-height:1.75;
+}
+.scenario strong{color:var(--green2);font-weight:600}
+.scenario-ans{
+  margin-top:10px;padding-top:10px;border-top:1px dashed rgba(74,148,100,.22);
+  font-size:13.5px;color:var(--green2);font-weight:500;line-height:1.65;
+}
+
+/* Law chip */
+.lawchip{
+  display:inline-block;font-size:12.5px;color:var(--tx2);font-style:italic;
+  background:var(--bg3);border:1px solid var(--bdr2);border-radius:6px;padding:7px 12px;line-height:1.6;
+}
+
+/* Diagram */
+.diagram-wrap{
+  background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+  padding:16px;overflow-x:auto;margin:4px 0;
+}
+.diagram-wrap svg{max-width:100%;height:auto;display:block;margin:0 auto}
+
+/* Key takeaway */
+.takeaway{
+  background:rgba(74,148,100,.07);border:1px solid rgba(74,148,100,.2);
+  border-radius:var(--r);padding:14px 16px;
+  font-size:14px;color:var(--tx);line-height:1.75;
+}
+.takeaway-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:7px;opacity:.9}
+
+/* Mistakes */
+.mistake-list{list-style:none;background:rgba(168,72,72,.05);border:1px solid rgba(168,72,72,.15);border-radius:var(--rs);padding:4px 12px}
+.mistake-list li{
+  display:flex;gap:8px;padding:9px 0;border-bottom:1px solid rgba(168,72,72,.1);
+  font-size:13.5px;color:var(--tx);line-height:1.65;
+}
+.mistake-list li:last-child{border-bottom:none}
+.mico{font-size:13px;margin-top:2px;flex-shrink:0}
+
+/* === SEARCH RESULTS === */
+.search-meta{padding:10px 16px;font-size:12.5px;color:var(--tx3);border-bottom:1px solid var(--bdr)}
+.search-meta strong{color:var(--tx2)}
+
+/* === BOOKMARKS SCREEN === */
+.empty-state{padding:60px 16px;text-align:center}
+.empty-ico{font-size:40px;opacity:.3;margin-bottom:12px}
+.empty-msg{font-size:14px;color:var(--tx3);line-height:1.6}
+
+/* === TOPIC NAV STRIP === */
+.tnav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 16px;border-top:1px solid var(--bdr);
+  font-size:12px;color:var(--tx3);
+}
+.tnav strong{color:var(--tx2)}
+
+/* marks */
+mark{background:rgba(74,148,100,.2);border-radius:2px;padding:0 1px;color:inherit}
+
+/* spacer */
+.spacer{height:14px}
+
+/* ═══════════════════════════════════════════════
+   DESKTOP LAYOUT — centered reading column
+═══════════════════════════════════════════════ */
+
+/* ── Core shell constraint ── */
+.app-shell{
+  max-width:720px;
+  margin:0 auto;
+  min-height:100vh;
+  padding-bottom:32px;
+  position:relative;
+  z-index:1;
+}
+
+/* ── Header: full-width bar, centered content ── */
+.hdr{
+  position:sticky;top:0;z-index:200;
+  width:100%;
+  background:rgba(11,13,11,0.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--bdr);
+}
+.hdr-inner{
+  max-width:720px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  height:44px;
+  padding:0 16px;
+}
+
+
+
+/* ── Desktop-specific enhancements ── */
+@media(min-width:769px){
+  body{
+    background:#080a08;
+  }
+  /* Ambient depth on either side of the column */
+  body::before{
+    content:'';
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:radial-gradient(ellipse 60% 100% at 50% 0%, rgba(74,148,100,.04) 0%, transparent 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .app-shell{
+    background:var(--bg);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.05),
+      0 0 60px rgba(0,0,0,.8),
+      0 0 120px rgba(0,0,0,.5);
+  }
+
+}
+
+@media(max-width:768px){
+  .app-shell{padding-bottom:24px}
+  .hdr-inner{padding:0 14px}
+}
+
+/* Toolbar visual alignment — matches content padding */
+@media(min-width:769px){
+  .reading-actions{
+    /* Already constrained by app-shell's 720px max-width.
+       Give it the same side padding as content so buttons
+       align with the text above. */
+    padding:10px 20px;
+  }
+  .tnav{
+    padding:8px 20px;
+  }
+}
+
+/* === SAVED HERO BUTTON === */
+.saved-hero-btn{
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+  background:rgba(200,80,80,.1);
+  border:1px solid rgba(200,80,80,.25);
+  border-radius:10px;
+  padding:7px 12px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.saved-hero-btn:hover{background:rgba(200,80,80,.18);border-color:rgba(200,80,80,.4)}
+.saved-ico{font-size:18px;line-height:1;margin-bottom:1px}
+.saved-ct{font-family:'Playfair Display',serif;font-size:22px;color:#e07070;line-height:1.1}
+.saved-hero-btn .hstat-l{color:#c07070}
+
+
+
+/* === UPDATED READING ACTIONS === */
+.btn-alltopics{
+  padding:8px 13px;
+  background:rgba(74,148,100,.12);
+  border:1px solid rgba(74,148,100,.3);
+  border-radius:20px;
+  color:var(--green2);
+  font-size:12px;font-weight:600;
+  white-space:nowrap;flex-shrink:0;
+  transition:all .15s;
+}
+.btn-alltopics:hover{background:rgba(74,148,100,.2);border-color:var(--green2)}
+.btn-read{
+  padding:9px 12px;
+  background:transparent;color:var(--tx3);
+  border:1px solid var(--bdr2);
+  border-radius:var(--rs);font-size:11.5px;font-weight:600;
+  flex-shrink:0;white-space:nowrap;
+  transition:all .15s;
+}
+.btn-read:hover{color:var(--tx)}
+.btn-read.done{
+  background:rgba(74,148,100,.15);border-color:var(--green);
+  color:#6ec990;
+}
+
+/* === PERSISTENT SEARCH (below progress, home only) === */
+.persistent-search{
+  padding:0 16px 14px;
+  background:var(--bg);
+}
+.psearch-inner{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;
+  padding:0 12px;height:36px;max-width:400px;
+  transition:border-color .15s;
+}
+.psearch-inner:focus-within{border-color:var(--bdr2)}
+.psearch-inner .sico{color:var(--tx3);font-size:13px;flex-shrink:0}
+.psearch-inner input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--tx);font-size:13.5px;font-family:'Inter',sans-serif;
+}
+.psearch-inner input::placeholder{color:var(--tx3)}
+
+/* === INLINE SEARCH RESULTS META === */
+.search-meta-inline{
+  padding:10px 16px 6px;
+  font-size:12.5px;color:var(--tx3);
+  border-bottom:1px solid var(--bdr);
+}
+.search-meta-inline strong{color:var(--tx2)}
+
+/* Force dark background on search inputs (browser reset) */
+input[type="search"]{
+  -webkit-appearance:none;
+  appearance:none;
+  background:transparent;
+  color-scheme:dark;
+}
+input[type="search"]::-webkit-search-cancel-button{
+  -webkit-appearance:none;
+}
+</style>
+</head>
+<body>
+
+<div class="hdr" id="hdr" role="banner">
+  <div class="hdr-inner">
+    <div class="hdr-logo">Sales & <span>BD Playbook</span></div>
+  </div>
+</div>
+
+<div class="app-shell">
+<!-- SCREENS -->
+<div class="screen active" id="screen-home">
+  <div id="home-static"></div>
+  <div id="home-dynamic"></div>
+</div>
+<div class="screen" id="screen-category"></div>
+<div class="screen" id="screen-topic"></div>
+<div class="screen" id="screen-bookmarks"></div>
+<div class="screen" id="screen-search"></div>
+
+<!-- BOTTOM NAV -->
+</div><!-- /app-shell -->
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════════
+// DATA — CATEGORIES & TOPICS
+// ═══════════════════════════════════════════════
+
+const CATS = [
+  {id:'bd-foundations',   name:'BD Foundations',           icon:'🎯', accent:'#d4924a'},
+  {id:'account-mgmt',     name:'Account Management',       icon:'🤝', accent:'#4a9464'},
+  {id:'marketplace',      name:'Marketplace Strategy',     icon:'🛒', accent:'#4878a8'},
+  {id:'campaigns',        name:'Campaign & GMV Growth',    icon:'🚀', accent:'#9a5adc'},
+  {id:'performance-mktg', name:'Performance Marketing',    icon:'📊', accent:'#5ab8b8'},
+  {id:'livestream',       name:'Livestream Commerce',      icon:'🎥', accent:'#dc5a9a'},
+  {id:'data-analytics',   name:'Data & Analytics',         icon:'🔢', accent:'#5a9adc'},
+  {id:'pitching',         name:'Pitching & New Business',  icon:'💡', accent:'#c8b85a'},
+  {id:'negotiation',      name:'Negotiation & Contracts',  icon:'📝', accent:'#dc7a5a'},
+  {id:'stakeholders',     name:'Stakeholder Management',   icon:'🧭', accent:'#6ab87a'},
+  {id:'ops-supply',       name:'Operations & Supply Chain',icon:'📦', accent:'#a85adc'},
+  {id:'content-seo',      name:'Content & SEO',            icon:'✍️', accent:'#5adcb8'},
+  {id:'leadership',       name:'Team Leadership',          icon:'👥', accent:'#dc9a5a'},
+  {id:'strategy',         name:'Commercial Strategy',      icon:'♟️', accent:'#7a9adc'},
+];
+
+const TOPICS = {
+
+'bd-foundations': [
+  {id:'bdf1', title:'What Business Development Actually Means',
+   intro:'BD is not just sales. It is the systematic expansion of commercial value through new accounts, new channels, and deeper existing relationships.',
+   concept:'Business development sits at the intersection of strategy, sales, and relationship management. It is the function responsible for identifying and unlocking new sources of revenue and growth.',
+   rule:'BD operates across three horizons: (1) Acquiring new accounts, (2) Expanding existing accounts, (3) Building platforms for future growth. All three matter — most people only focus on the first.',
+   explanation:'The distinction from pure sales: sales closes deals on existing opportunities. BD creates the opportunities — through market mapping, partner development, and channel building.',
+   why:'Without BD, an organisation only monetises what it already has. With BD, it systematically expands its addressable market.',
+   hrbp:'The most effective BD practitioners in e-commerce split their time roughly: 30% new account acquisition, 50% existing account growth (where GMV actually lives), 20% platform and channel development.',
+   mistakes:['Treating BD as pure new account sales — ignoring the 50% growth opportunity within existing accounts','No account tiering — spending equal time on RM50k accounts and RM5M accounts'],
+   scenario:'A BD manager has 20 brand accounts. 3 generate 80% of GMV. How should she allocate time? Answer: Tier the portfolio. Top 3 = strategic accounts requiring weekly engagement. Middle tier = monthly. Long tail = quarterly reviews or self-serve.',
+   takeaway:'BD is portfolio management, not just hunting. Know which accounts have growth potential, which need protection, and which to rationalise.'},
+
+  {id:'bdf2', title:'The Consultative BD Approach',
+   intro:'Transactional selling dies the moment a better offer appears. Consultative BD creates dependency through value.',
+   concept:'Consultative BD means positioning yourself as a strategic partner to the client — understanding their business deeply enough to proactively identify growth opportunities they have not yet seen.',
+   rule:'The consultative approach: Diagnose (understand the brand\'s actual situation) → Prescribe (recommend a course of action) → Execute (deliver on the plan) → Review (close the loop with data).',
+   explanation:'Most BD managers skip straight to prescribe — showing up with a campaign pitch before understanding the brand\'s inventory position, margin structure, or competitive context. This destroys credibility.',
+   why:'Brands have many service providers pitching them. The one who understands their business best gets first right of refusal on new budgets.',
+   hrbp:'At Shopee, the most effective Relationship Managers ran quarterly business reviews presenting data on the brand\'s performance vs category benchmarks and arrived with pre-built proposals. This is consultative BD in practice.',
+   mistakes:['Pitching without diagnostics — recommending solutions before understanding the problem','QBRs that are backward-looking reports, not forward-looking proposals'],
+   scenario:'A beauty brand\'s conversion rate is 2.8% vs category average of 4.1%. What do you recommend before suggesting any ad spend? Answer: Diagnose the conversion gap first — likely a listing quality issue, not a traffic issue. Fix the funnel before buying more traffic.',
+   takeaway:'Diagnose before you prescribe. The brand that trusts your diagnosis buys your prescription. Arrive with data about their business, not just your product catalogue.'},
+
+  {id:'bdf3', title:'BD Pipeline Management',
+   intro:'Unpredictable BD output is almost always a pipeline management failure, not a talent failure.',
+   concept:'A BD pipeline is a structured view of all opportunities at different stages — from prospect to active account. Managing the pipeline means managing future revenue.',
+   rule:'Pipeline stages: Prospect → Qualified → Proposal Sent → Negotiation → Won/Closed. Each stage needs a clear definition, target conversion rate, and maximum time-in-stage before escalation.',
+   explanation:'Two most common pipeline failures: (1) Top-heavy pipeline — too many prospects, too few in negotiation, because qualification is weak. (2) Stale pipeline — opportunities sitting in the same stage for months.',
+   why:'Without pipeline visibility, BD output is unpredictable. With it, you can forecast revenue 60-90 days ahead and identify where to focus effort.',
+   hrbp:'Weekly pipeline reviews should focus on: what moved forward, what is stuck and why, and what needs to be dropped to make room for fresher opportunities.',
+   mistakes:['Counting all prospects as pipeline — they are not pipeline until qualified','No time-in-stage limits — leads sit unactioned for weeks'],
+   scenario:'BD manager has 40 opportunities in pipeline but consistently misses targets. Review shows 35 are in "Prospect" stage for 60+ days. Diagnosis? Answer: The pipeline is illusory — it is a prospect list. Cull the stale opportunities and tighten qualification criteria.',
+   takeaway:'Pipeline does not equal prospect list. Qualified opportunities with clear next steps equals pipeline. Review stages weekly. Drop what is stale.'},
+
+  {id:'bdf4', title:'The Value Proposition — What You Actually Sell',
+   intro:'In e-commerce BD, you are rarely selling the platform. You are selling growth outcomes — GMV, market share, brand equity.',
+   concept:'A value proposition is the specific, measurable outcome you promise a client in exchange for their commitment. It must be credible, differentiated, and relevant to their actual business objectives.',
+   rule:'Effective value propositions: (1) The outcome (GMV, ranking, reach), (2) The mechanism (how you will achieve it), (3) The evidence (past results that make it credible). All three together.',
+   explanation:'Generic pitches ("our platform has millions of users") lose to specific ones ("brands in your category that ran Super Brand Day with us saw an average 3.2× GMV uplift — here is the data").',
+   why:'Brands are pitched constantly. Specificity and evidence cut through. Vague claims about platform scale are table stakes.',
+   hrbp:'Kiehl\'s No.1 premium brand ranking on Shopee for 8 consecutive months is a value proposition asset — evidence of what a well-executed marketplace strategy delivers. Build a case study library from past wins.',
+   mistakes:['Value propositions built around platform features, not client outcomes','No evidence layer — claims without data are noise'],
+   scenario:'Pitching a luxury skincare brand on TikTok Shop. Their concern is brand equity dilution. How do you frame your value proposition? Answer: Lead with brand elevation, not volume. "Kiehl\'s achieved RM1M in a single campaign with a curated approach that maintained premium positioning while driving real commerce results."',
+   takeaway:'Sell outcomes, not features. Outcomes plus evidence plus mechanism equals a compelling pitch. Without all three, you are just another vendor.'},
+
+  {id:'bdf5', title:'Revenue vs Relationship — Getting the Balance Right',
+   intro:'Pushing for short-term GMV at the expense of the relationship generates one good quarter then loses the account.',
+   concept:'Sustainable BD requires balancing short-term revenue generation with long-term relationship investment. Both matter — neither alone is sufficient.',
+   rule:'Rule of thirds for client time: 1/3 on commercial execution (campaigns, GMV), 1/3 on strategic conversations (brand\'s 12-month roadmap), 1/3 on relationship (trust, rapport, understanding the person).',
+   explanation:'Brands do not defect to competitors because of product features. They defect because of relationship failures — they felt taken for granted, not consulted, or not heard.',
+   why:'Client acquisition costs 5-7× more than client retention. The investment in relationship is a retention investment.',
+   hrbp:'The accounts retained long-term at Shopee were not the ones receiving the most aggressive commercial pitches — they were the ones whose managers genuinely understood the brand\'s seasonal calendar, inventory constraints, and internal approval dynamics.',
+   mistakes:['Contacting the client only when there is something to sell — transactional relationship','Over-promising campaign outcomes to win budget, then under-delivering and losing trust'],
+   scenario:'A brand partner says "I feel like you only call me when you want something." How do you respond? Answer: Acknowledge it honestly. Restructure engagement: schedule a monthly strategic conversation with no commercial agenda. Arrive with market insights and competitive intelligence, not a pitch deck.',
+   takeaway:'Relationships are the moat around your accounts. Invest in them proactively. The best protection against a competitor pitch is a client who feels genuinely valued.'},
+],
+
+'account-mgmt': [
+  {id:'am1', title:'Account Tiering — Not All Accounts Are Equal',
+   intro:'Treating a RM50k account the same way as a RM5M account is the fastest route to misallocated energy and missed growth.',
+   concept:'Account tiering is the practice of segmenting your portfolio by value, strategic importance, and growth potential — then calibrating engagement intensity accordingly.',
+   rule:'Tier 1 (Strategic): top 20% by GMV. Weekly engagement, dedicated growth plans, executive relationship. Tier 2 (Growth): 40%. Bi-weekly. Tier 3 (Maintenance): remaining 40%. Monthly or self-serve.',
+   explanation:'The temptation is to spend disproportionate time on Tier 3 accounts because they generate the most noise. This starves Tier 1 accounts of the strategic attention that keeps them growing.',
+   why:'Account tiering is a resource allocation discipline. Without it, you spend equal effort on unequal accounts.',
+   hrbp:'At Momentum Commerce, managing brands like Wardah, Kiehl\'s, and Makeover simultaneously requires explicit tiering — Wardah (flagship, highest GMV) gets weekly strategy sessions, while smaller brands get structured monthly reviews.',
+   mistakes:['No formal tiering — time allocated by whoever shouts loudest','Tier 1 accounts treated as operational accounts — only contacted about issues, never about strategy'],
+   scenario:'You have 15 accounts. 2 generate 65% of GMV. How do you restructure your calendar? Answer: Block 50% of your week for those 2 accounts. The remaining 13 share the other 50%, tiered by growth potential.',
+   takeaway:'Tier by value and potential, not by noise. Your biggest accounts deserve your best time, not whatever is left over after operational firefighting.'},
+
+  {id:'am2', title:'The QBR — Quarterly Business Review Done Right',
+   intro:'A QBR that is just a recap of last quarter\'s numbers is a report. A QBR that maps the next quarter\'s growth plan is a strategic conversation.',
+   concept:'The Quarterly Business Review is the structured touchpoint where you review performance, align on strategy, and confirm the commercial relationship for the next period.',
+   rule:'QBR structure: (1) Last quarter performance vs target (5 mins), (2) Market context (5 mins), (3) What worked and why (10 mins), (4) Next quarter plan with specific campaigns and GMV targets (20 mins), (5) Relationship check (5 mins).',
+   explanation:'The performance section should contain no surprises — you should have been communicating performance throughout the quarter. The bulk of time is on the forward plan.',
+   why:'QBRs are how you maintain strategic relevance and retain budget commitments. Without them, the relationship becomes purely operational.',
+   hrbp:'Biweekly presentations to upper management at Momentum Commerce — the same discipline: arrive with a narrative, not just numbers. "Here is what we see, here is what it means, here is what we recommend."',
+   mistakes:['QBR deck is all backward-looking data — no forward proposals','No action items at the end — QBR happens but nothing changes'],
+   scenario:'Brand partner asks why their category share dropped 3 points last quarter. How do you frame this in the QBR? Answer: Acknowledge it directly. Present root cause analysis. Then present the remediation plan with timeline and ownership. Never hide unfavourable data.',
+   takeaway:'QBR = 20% past, 80% future. Arrive with pre-built proposals. End with written action items and owners. The QBR is your most important retention tool.'},
+
+  {id:'am3', title:'Client Health Scoring — Spotting Churn Before It Happens',
+   intro:'By the time a client tells you they are leaving, the decision has usually been made. Health scoring gives you early warning.',
+   concept:'Client health scoring is a systematic way to track account health across multiple signals: engagement frequency, GMV trajectory, campaign participation rate, responsiveness, and relationship sentiment.',
+   rule:'Key health signals: GMV vs target, response time to communications, campaign participation rate, last executive contact date, NPS or relationship sentiment.',
+   explanation:'Declining response time and reducing campaign participation are the two earliest and most reliable churn signals. They precede the formal "we\'re going with another agency" conversation by 2-3 months.',
+   why:'Proactive retention is dramatically cheaper than reactive win-back. A client who is declining can be saved. A client who has already defected almost never returns.',
+   hrbp:'Build a monthly health scorecard for all Tier 1 and Tier 2 accounts. Anything scoring amber triggers a proactive check-in call within the week.',
+   mistakes:['No health tracking — churn always comes as a surprise','Health assessment based only on GMV — misses engagement and relationship signals'],
+   scenario:'A brand\'s campaign participation rate dropped from 4/month to 1/month over 3 months. GMV is still steady. What does this signal? Answer: Early churn signal. They are maintaining GMV from organic efforts but pulling back investment. They may be evaluating alternatives. Immediate proactive outreach needed.',
+   takeaway:'Track engagement signals, not just GMV. Declining participation precedes declining GMV by months. Health score monthly. Act on amber signals immediately.'},
+
+  {id:'am4', title:'Upselling and Cross-Selling Within Accounts',
+   intro:'The easiest sale is to someone who already trusts you. Most account managers leave significant revenue on the table.',
+   concept:'Upselling is moving an existing client to a higher-value service. Cross-selling is introducing them to adjacent services. The best time to do either is immediately after demonstrating value on the current engagement.',
+   rule:'Upsell/cross-sell sequence: (1) Demonstrate value first — earn the right to ask for more, (2) Identify the adjacent opportunity based on their stated business objectives, (3) Frame the expansion as a logical next step, not a new sell.',
+   explanation:'In e-commerce agency context: a brand starts on Shopee listings management → cross-sell to TikTok Shop → then to livestream production → then to performance marketing. Each expansion is built on demonstrated success at the prior stage.',
+   why:'Customer acquisition costs 5-7× more than expansion revenue. The gross margin on expanded accounts is typically higher because infrastructure costs are already absorbed.',
+   hrbp:'Wardah\'s account expansion from Shopee to TikTok Shop to livestream to performance marketing is the archetype of systematic account expansion built on demonstrated results at each stage.',
+   mistakes:['Cross-selling before demonstrating value in the current engagement','Upselling based on your revenue targets, not the client\'s actual needs'],
+   scenario:'A brand is happy with your Shopee management. You want to introduce TikTok Shop. How do you frame it? Answer: "Wardah, a comparable brand in your category, expanded from Shopee-first to a TikTok Shop parallel strategy and saw a 40% GMV uplift. Given your Q4 targets, I\'d like to walk you through what this could look like for you."',
+   takeaway:'Earn the right to expand before you ask to expand. Frame upsells as logical next steps toward the client\'s own stated goals.'},
+
+  {id:'am5', title:'Managing Difficult Client Conversations',
+   intro:'The ability to have a difficult conversation without losing the relationship is one of the highest-value skills in account management.',
+   concept:'Difficult conversations include: performance misses, budget disagreements, scope creep disputes, and relationship deterioration. Avoiding them makes them worse.',
+   rule:'Structure: (1) Acknowledge the situation, (2) Present facts data-based, (3) Own what is yours to own, (4) Present a clear resolution proposal, (5) Confirm the path forward and the relationship.',
+   explanation:'The most common error is defensiveness when the client raises legitimate performance concerns. Defensiveness triggers the client\'s adversarial instinct. Acknowledgement followed by a credible plan triggers collaborative problem-solving.',
+   why:'Clients who raise concerns and receive genuine engagement become stronger advocates than clients who never had a problem. The recovery is the relationship-builder.',
+   hrbp:'When a campaign underperforms: never rationalise before you acknowledge. "I understand this result fell short of what we set together. Here is my analysis of what happened and what we are doing differently."',
+   mistakes:['Leading with excuses before acknowledging the impact','Avoiding the conversation entirely — silence reads as indifference'],
+   scenario:'Campaign GMV came in at 60% of the RM500k target. Brand partner calls angrily. Opening line? Answer: "I hear your frustration and it is entirely valid. We set a target together and we did not hit it. Let me walk you through exactly what happened and what I am going to change."',
+   takeaway:'Acknowledge before you analyse. Own before you explain. Resolve before you move on. Difficult conversations handled well build trust.'},
+],
+
+'marketplace': [
+  {id:'mp1', title:'The Marketplace Ecosystem — How Platforms Actually Work',
+   intro:'To win on marketplace, you need to understand how the algorithm decides who wins — because it is not random.',
+   concept:'Marketplace platforms (Shopee, TikTok Shop, Lazada) operate algorithmic ranking systems that determine search visibility, campaign eligibility, and promotional real estate.',
+   rule:'Three factors drive algorithmic ranking: (1) Conversion rate (CVR) — the platform optimises for sales, (2) Review velocity — new positive reviews improve ranking, (3) Sales velocity — recent GMV signals relevance to the algorithm.',
+   explanation:'The reinforcing loop: higher ranking → more traffic → more sales → better ranking. Breaking into this loop requires either paid traffic to generate initial velocity, or a promotional event to spike initial sales.',
+   why:'On a platform with millions of SKUs, discoverability is not accidental. It is engineered through understanding and working with the algorithm.',
+   hrbp:'Kiehl\'s No.1 premium brand ranking for 8 consecutive months was a sustained combination of SEO (keyword-optimised listings), Super Brand Day (sales velocity spike), and ads (conversion rate maintenance).',
+   mistakes:['Launching on marketplace with no plan to break into the algorithm — listing and waiting','Ignoring CVR as the primary platform metric — many brands optimise traffic but not conversion'],
+   scenario:'A new beauty brand launches on Shopee with a great product but zero reviews and poor ranking. First 90-day strategy? Answer: Month 1: Vouchers/flash deals to generate initial sales velocity and reviews. Month 2: Ads targeting high-converting search terms. Month 3: Apply for first campaign feature slot with proven CVR.',
+   takeaway:'Marketplace equals algorithm game. CVR drives ranking. Reviews drive CVR. Ranking drives organic traffic. Engineer the loop deliberately, starting with conversion before buying traffic.',
+      diagram:'<svg viewBox="0 0 320 130" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif"><text x="160" y="16" text-anchor="middle" fill="#60cc7a" font-size="10" font-weight="700" letter-spacing="1">MARKETPLACE RANKING LOOP</text><circle cx="160" cy="32" r="18" fill="#3ea85a20" stroke="#3ea85a" stroke-width="1.2"/><text x="160" y="29" text-anchor="middle" fill="#3ea85a" font-size="7.5" font-weight="600">Higher</text><text x="160" y="40" text-anchor="middle" fill="#3ea85a" font-size="7.5" font-weight="600">Ranking</text><circle cx="225" cy="72" r="18" fill="#2a9d6a20" stroke="#2a9d6a" stroke-width="1.2"/><text x="225" y="69" text-anchor="middle" fill="#2a9d6a" font-size="7.5" font-weight="600">More</text><text x="225" y="80" text-anchor="middle" fill="#2a9d6a" font-size="7.5" font-weight="600">Traffic</text><circle cx="195" cy="112" r="18" fill="#28a86020" stroke="#28a860" stroke-width="1.2"/><text x="195" y="109" text-anchor="middle" fill="#28a860" font-size="7.5" font-weight="600">More</text><text x="195" y="120" text-anchor="middle" fill="#28a860" font-size="7.5" font-weight="600">Sales</text><circle cx="125" cy="112" r="18" fill="#4aaa4020" stroke="#4aaa40" stroke-width="1.2"/><text x="125" y="109" text-anchor="middle" fill="#4aaa40" font-size="7.5" font-weight="600">More</text><text x="125" y="120" text-anchor="middle" fill="#4aaa40" font-size="7.5" font-weight="600">Reviews</text><circle cx="95" cy="72" r="18" fill="#38b85820" stroke="#38b858" stroke-width="1.2"/><text x="95" y="69" text-anchor="middle" fill="#38b858" font-size="7.5" font-weight="600">Better</text><text x="95" y="80" text-anchor="middle" fill="#38b858" font-size="7.5" font-weight="600">CVR</text><text x="160" y="126" text-anchor="middle" fill="#748a76" font-size="8">CVR is the key input — fix conversion before buying more traffic</text></svg>'},
+
+  {id:'mp2', title:'Shopee vs TikTok Shop vs Lazada — Platform Strategy',
+   intro:'Each platform has a different algorithmic logic, user behaviour, and growth lever. A one-size-fits-all approach loses on all three.',
+   concept:'Platform differentiation: Shopee = search-driven, high purchase intent, voucher-sensitive. TikTok Shop = discovery-driven, impulse purchase, content-first. Lazada = search-driven, strong cross-border, loyalty programme-heavy.',
+   rule:'Match strategy to platform behaviour: Shopee → SEO, ads, campaign slots. TikTok Shop → short-form video, affiliate programme, livestream. Lazada → LazMall positioning, voucher strategy, bundle mechanics.',
+   explanation:'The biggest marketplace BD error: treating Shopee strategy as the template for TikTok Shop. TikTok Shop requires entirely different content investment — the product catalogue that works on Shopee is invisible on TikTok without video content.',
+   why:'Platform-specific strategy amplifies ROI. Platform-agnostic strategy dilutes it across all three.',
+   hrbp:'Wardah\'s TikTok Super Brand Day generating RM500k and 3× ROI was only possible because the TikTok-specific strategy (live commerce, short-form video, affiliate activation) was executed correctly.',
+   mistakes:['Same product images and copy across all platforms','Treating TikTok Shop as Shopee with videos — the algorithm and user behaviour are fundamentally different'],
+   scenario:'Brand wants to launch on TikTok Shop having been successful on Shopee. What do you warn them about? Answer: Content investment is non-negotiable on TikTok. Products need native video content. The image that works on Shopee is not enough. Expect a 60-90 day content ramp-up before ads become efficient.',
+   takeaway:'Platform does not equal channel. Each has its own algorithm, user behaviour, and growth mechanics. Build platform-specific strategies. Shopee-first does not mean TikTok-ready.'},
+
+  {id:'mp3', title:'Super Brand Day — Planning and Executing at Scale',
+   intro:'Super Brand Day is the highest-stakes campaign moment on Shopee and TikTok. The difference between 1× and 3× ROI is preparation depth.',
+   concept:'Super Brand Day is a platform-featured promotional event where a brand gets dedicated homepage real estate, enhanced ad allocation, and platform-driven traffic for 24 hours. The window is short — preparation must be long.',
+   rule:'SBD preparation timeline: T-60 days: confirm inventory, negotiate mechanic, brief content team. T-30 days: hero listings finalised, ads confirmed, affiliate briefed. T-14 days: teaser content live. T-7 days: final inventory check, live script confirmed.',
+   explanation:'The RM500k Wardah TikTok SBD and Kiehl\'s RM1M Shopee SBD were outcomes of structured preparation — hero product identification, inventory pre-positioning, affiliate activation, and real-time monitoring during the event.',
+   why:'SBD is a high-investment, high-visibility event. Poor execution damages both the brand relationship and future campaign eligibility.',
+   hrbp:'During SBD, real-time monitoring is critical: hourly GMV tracking, stock depletion rate vs forecast, live conversion optimisation (adjusting pricing, mechanics, and live script in real-time based on data).',
+   mistakes:['Inventory not aligned with campaign traffic — stockout in hour 3 of a 24-hour SBD','No pre-launch teaser — missing the week of warm-up traffic that SBDs generate before day zero'],
+   scenario:'SBD starts in 2 hours. Key SKU has 200 units in warehouse but only 50 are live in seller centre due to upload error. What do you do? Answer: All-hands on seller centre listing fix immediately. Brief the live host on the inventory constraint. Every minute of non-availability during SBD has a direct GMV cost.',
+   takeaway:'SBD outcome is 80% determined before the day starts. Inventory, content, affiliate, and platform alignment done in advance. On the day: monitor in real-time, adapt, and solve fast.'},
+
+  {id:'mp4', title:'Category Ranking — Owning Your Space',
+   intro:'Being the No.1 brand in your category is not a vanity metric — it is the flywheel that self-perpetuates growth.',
+   concept:'Category ranking on marketplace determines which brands appear first in search results. The No.1 brand receives disproportionate organic traffic relative to lower-ranked competitors.',
+   rule:'Ranking drivers: sales volume (approx. 40%), conversion rate (30%), review count and rating (20%), listing quality and SEO (10%). Approximate weights — actual algorithm is proprietary but these factors are consistently documented.',
+   explanation:'Kiehl\'s maintained No.1 premium brand on Shopee for 8 months through: consistent SBD-driven sales velocity spikes, SEO-optimised listings for category keywords, and an affiliate programme that drove review volume.',
+   why:'Organic traffic from category leadership is the lowest-cost customer acquisition channel in marketplace. A ranking investment pays dividends in perpetuity.',
+   hrbp:'Category rankings are visible to competitors. Monitoring your rank weekly and understanding what moved it is essential competitive intelligence.',
+   mistakes:['Organic ranking as an afterthought — all investment in paid ads, none in ranking fundamentals','Ranking maintenance treated as achieved — it requires active monthly investment to sustain'],
+   scenario:'Brand has been No.1 for 3 months. They want to cut listing optimisation budget. Advice? Answer: Advise against it. Ranking is a share — it only exists in relation to what competitors do. The moment you stop investing, a competitor who is actively investing will close the gap. The cost of reacquisition exceeds the cost of maintenance.',
+   takeaway:'Category No.1 is a compound asset. Invest in maintaining it. Never treat ranking as done.'},
+
+  {id:'mp5', title:'Seller Centre Management — The Operational Foundation',
+   intro:'A brilliant strategy with a poorly managed seller centre is a brilliant strategy that does not execute.',
+   concept:'Seller Centre is the operational backbone of marketplace presence — managing listings, inventory, orders, ads, and seller performance metrics. Excellence here separates good from great marketplace managers.',
+   rule:'Non-negotiable standards: (1) Listings fully optimised (title, images, description, keywords, pricing), (2) Inventory maintained above safety stock, (3) Order fulfilment SLA > 95% on-time, (4) Seller rating maintained (response rate > 90%).',
+   explanation:'Seller performance metrics feed directly into algorithmic ranking. A brand with a 97% fulfilment rate ranks better than the same brand at 88%, holding all other factors constant.',
+   why:'Your seller health score is your licence to operate in high-traffic promotions. Let it slip and you lose campaign eligibility.',
+   hrbp:'Managing 8 seller centres simultaneously at Momentum Commerce required systematic SOP-driven operations — each centre with a designated PIC, daily checklist, and escalation protocol.',
+   mistakes:['Stockouts during peak campaigns — the most expensive operational failure in marketplace','Poor seller ratings from slow response to buyer messages — damages listing visibility'],
+   scenario:'Brand is about to enter 11.11 campaign. They have 500 units in stock for a RM1M target. What is the risk? Answer: Critical stockout risk. At average order value of RM80, 500 units = RM40k ceiling. Either increase stock order immediately or reduce campaign ambition.',
+   takeaway:'Strategy without operational execution fails. Seller health equals ranking eligibility. Stockouts during campaigns are the most avoidable and most costly marketplace failures.'},
+],
+
+'campaigns': [
+  {id:'ca1', title:'The Campaign Calendar — Strategic vs Reactive',
+   intro:'Brands that plan their campaign calendar 3 months in advance outperform brands that respond to platform invitations as they arrive.',
+   concept:'A campaign calendar is the 12-month plan of promotional events, peak seasons, and brand moments — mapped against platform campaign slots, seasonal demand curves, and commercial targets.',
+   rule:'Campaign planning hierarchy: (1) Platform mega-campaigns (Double Digits: 9.9, 10.10, 11.11, 12.12 — plan 90 days ahead), (2) SBD and Pay Day Sales — plan 60 days ahead, (3) Brand-owned moments — plan 45 days ahead, (4) Tactical fills — plan 14 days ahead.',
+   explanation:'The brands that consistently outperform on Double Digit campaigns are the ones with inventory pre-positioned, content pre-produced, and ads pre-loaded 30+ days before the event.',
+   why:'Campaign preparation time compounds — 90 days of prep produces 3× the result of 30 days of prep, because every downstream element takes time to execute well.',
+   hrbp:'At Shopee and Momentum Commerce, biweekly stakeholder planning sessions for campaigns were the structural mechanism that prevented reactive execution.',
+   mistakes:['Confirming participation in 11.11 at T-14 days — too late for inventory, content, and affiliate alignment','No linkage between campaign calendar and inventory planning'],
+   scenario:'It is September 1. Your brand has not started planning for 11.11. First action? Answer: Immediate campaign brief to all stakeholders: inventory team, content team, platform rep, and ads team. You are behind — move fast on all fronts simultaneously.',
+   takeaway:'Plan 90-60-45-14 days out. The earlier you plan, the better every element executes. Reactive campaign management is the most expensive way to deliver mediocre results.'},
+
+  {id:'ca2', title:'GMV Forecasting — Building Credible Targets',
+   intro:'A GMV target without a bottoms-up model is a wish. A target with a model is a commitment.',
+   concept:'GMV forecasting is the process of building a bottom-up projection of campaign revenue based on: traffic estimates, conversion rate assumptions, average order value, and campaign mechanic uplifts.',
+   rule:'GMV forecast components: Baseline GMV (average of last 3 months) × Campaign traffic multiplier × Conversion uplift (do mechanics improve CVR?) × AOV adjustment (do bundle mechanics change basket size?).',
+   explanation:'Most campaign GMV misses are not due to poor execution on the day — they are due to unrealistic targets set without a model. A target built on interrogatable assumptions is defensible.',
+   why:'Credible forecasting builds trust with brand partners, enables better inventory planning, and gives the team a fair performance benchmark.',
+   hrbp:'When doubling Wardah\'s November GMV from RM700k to RM1.4M was the target, the forecast model would show: what traffic uplift is expected, what conversion mechanics drive it, and what inventory depth is needed.',
+   mistakes:['Top-down targets set without bottoms-up validation','No post-campaign reconciliation — targets missed without analysis means the same mistakes repeat'],
+   scenario:'Brand partner asks for a RM2M GMV target for 11.11. Your model projects RM1.4M. How do you handle the conversation? Answer: Present your model transparently. "To reach RM2M, we would need X more ad spend, Y more inventory, and Z improved mechanics. Here is what each lever costs and its expected return."',
+   takeaway:'Forecast bottoms-up, not top-down. Show your assumptions. Make targets stretchable through investment, not wishful thinking. Post-campaign reconciliation is where the learning lives.'},
+
+  {id:'ca3', title:'Double Digit Campaigns — Winning the Peak',
+   intro:'11.11, 12.12, 9.9 — these are the moments that define annual marketplace performance. The winners are determined by preparation, not by execution on the day.',
+   concept:'Double Digit campaigns are the highest-traffic events on SEA marketplaces. Traffic multipliers of 10-30× normal day are typical. Preparation depth is the primary success factor.',
+   rule:'Double Digit success factors: Hero SKU identification (2-3 products driving 70% of GMV), Mechanic depth (bundles, vouchers, flash deals), Inventory pre-positioning (3 weeks before campaign), Ads pre-loading (2 weeks before event).',
+   explanation:'The Shopee Shocking Sale is a precursor campaign that allows brands to generate review velocity and algorithm momentum before the main event. Winning brands use it as a warmup, not as the main event.',
+   why:'Double Digit campaigns generate 20-40% of annual marketplace GMV in a 24-48 hour window. The ROI differential between prepared and unprepared brands is enormous.',
+   hrbp:'At Shopee, leading the Shocking Sale initiative for Health & Beauty and achieving 10% MoM allocation increase demonstrates that pre-campaign platform engagement drives allocation and feature slot eligibility for the main event.',
+   mistakes:['Participating in Double Digits with standard pricing — mechanics need to be event-specific to compete for the consumer\'s wallet','Insufficient inventory — the most common single-point failure in Double Digit campaigns'],
+   scenario:'It is 10.10 launch day. Your hero SKU sells out in the first 2 hours. 22 hours of the campaign run on depleted stock. How do you prevent this next time? Answer: Hero SKU inventory should be 2× your bottoms-up GMV projection. Over-index on stock for the top 3 SKUs. The downside of excess stock is modest; the downside of stockout is catastrophic.',
+   takeaway:'Double Digits: hero SKU, aggressive mechanics, 2× inventory, 30-day prep. The day itself is too late to fix anything. Every result on the day was determined weeks before.'},
+
+  {id:'ca4', title:'Campaign ROI — Measuring What Actually Matters',
+   intro:'GMV is a vanity metric without margin. Campaign ROI is the number that determines whether the business grew or just processed volume.',
+   concept:'Campaign ROI measures the return on total campaign investment — including platform fees, ad spend, voucher subsidy, and operational costs — against the incremental margin generated.',
+   rule:'Campaign ROI formula: (Campaign GMV × margin rate − campaign costs) ÷ campaign costs. A 3× ROI means for every RM1 invested, RM3 in net return was generated.',
+   explanation:'The GMV trap: a brand can achieve RM1M GMV with negative ROI if the mechanic cost (deep discounts plus voucher subsidy plus ads) exceeds the margin generated. This is growth that destroys value.',
+   why:'Brands increasingly measure campaigns on ROI, not just GMV. BD managers who speak the language of margin and ROI are trusted with bigger budgets.',
+   hrbp:'Wardah TikTok SBD achieving 3× ROI across two consecutive years means the financial model was robust — not just the GMV outcome. Being able to present this to brand partners is a significant BD asset.',
+   mistakes:['Presenting GMV growth without margin context — the client\'s finance team will find the real number eventually','ROI calculation that excludes voucher subsidy — understates the true cost of the campaign mechanic'],
+   scenario:'Campaign generated RM800k GMV (target: RM700k) but ROI was 1.2× (target: 2.5×). How do you present this? Answer: GMV exceeded target but ROI undershot significantly. Analyse why: too deep a discount mechanic? Over-spend on ads? Propose mechanic adjustments for next campaign to protect margin while maintaining volume.',
+   takeaway:'GMV tells you how much moved. ROI tells you whether the business made money doing it. Always track both. A brand partner who trusts your ROI analysis will give you more budget autonomy.'},
+],
+
+'performance-mktg': [
+  {id:'pm1', title:'Paid Ads on Marketplace — The Foundation',
+   intro:'Marketplace ads are not optional for brands that want to scale. They are the traffic engine that fuels organic ranking.',
+   concept:'Marketplace paid advertising (Shopee Ads, TikTok Shop Ads) operates on a CPC or CPM model. The objective is not just traffic — it is profitable traffic that converts.',
+   rule:'Key marketplace ad types: Search Ads (capture high-intent search traffic — highest conversion, highest CPC), Discovery Ads (browsing feeds — lower CVR but builds awareness), Product Boost (Shopee-specific; boosts search rank for specific keywords).',
+   explanation:'ROAS (Return on Ad Spend) is the primary paid ads metric: Revenue from ads ÷ Ad spend. A ROAS of 8× means for every RM1 spent on ads, RM8 in GMV was generated. Acceptable ROAS varies by category margin — a high-margin skincare brand can accept 5×, while a low-margin FMCG brand needs 15×.',
+   why:'Paid ads create the initial sales velocity that improves organic ranking — which then reduces the need for paid ads. The investment in ads is an investment in organic ranking.',
+   hrbp:'Managing paid ads at Shopee with CPAS, Google Ads, and TikTok Ads experience: the cross-platform ads strategy is increasingly important as attribution becomes multi-touch — understanding how each channel contributes to the final conversion.',
+   mistakes:['Running broad match keywords on all ad types — burning budget on low-intent terms','Setting a budget and leaving it — ads require daily monitoring and optimisation, especially during campaigns'],
+   scenario:'Brand has RM10,000 monthly ads budget. Competitive skincare category. How do you allocate? Answer: 60% Search Ads (high-intent, direct conversion), 25% Product Boost on hero SKUs (ranking maintenance), 15% Discovery Ads (awareness, remarketing). Review weekly. Shift budget toward what is performing.',
+   takeaway:'ROAS is the north star. Match ROAS targets to category margin. Start with Search (highest intent). Allocate Product Boost for ranking maintenance. Review weekly — set it and forget it destroys budget.'},
+
+  {id:'pm2', title:'Marketplace SEO — The Free Traffic Compounding Asset',
+   intro:'Marketplace SEO is different from Google SEO, but the principle is the same: optimise for how users actually search, and the algorithm rewards you with free visibility.',
+   concept:'Marketplace SEO is the practice of optimising product listings to rank higher in platform search results for relevant keywords.',
+   rule:'Marketplace SEO formula: (1) Keyword research — what are buyers actually typing? (2) Title optimisation — primary keyword in first 30 characters, (3) Description — answer buyer questions and embed keywords naturally, (4) Attributes — fill all platform attribute fields completely, (5) Correct category placement.',
+   explanation:'A product titled "Kiehl\'s Serum" will rank lower than "Kiehl\'s Midnight Recovery Concentrate Face Serum Anti-Aging 50ml" for the search "face serum anti-aging" — even if the product is identical.',
+   why:'Every optimised listing generates ongoing free traffic. The investment compounds: a well-optimised listing from 18 months ago continues generating traffic today.',
+   hrbp:'Creating and updating optimised product listings across 8 seller centres — this is the operational execution of marketplace SEO at scale. A consistent SEO standard across all listings is a significant competitive advantage.',
+   mistakes:['Manufacturer product names as listing titles — optimised for internal codes, not buyer search queries','Zero keyword research — using assumed search terms instead of actual platform data'],
+   scenario:'New skincare product launches on Shopee. No SEO work done. Traffic is zero after 2 weeks. First action? Answer: Download the Shopee keyword planner data for category. Identify top 10 search terms with volume. Rewrite listing titles and descriptions incorporating these terms. The product is invisible because the algorithm cannot classify it.',
+   takeaway:'Marketplace SEO: keyword research → title optimisation → description → attributes → correct category. Each optimised listing is a perpetual traffic asset. Do it right once, maintain it regularly.'},
+
+  {id:'pm3', title:'Affiliate Marketing on Marketplace',
+   intro:'Affiliates are your distributed sales force — people who bring their own audience to sell your product for a commission. Done well, they are one of the highest-ROI channels in e-commerce.',
+   concept:'Marketplace affiliate programmes (Shopee Affiliate, TikTok Creator Marketplace) allow brands to recruit content creators and publishers to promote their products in exchange for a commission on resulting sales.',
+   rule:'Affiliate programme fundamentals: commission rate (typically 5-15% depending on category), product provision for content creation, tracking links, and performance monitoring. Quality of affiliate partners matters more than quantity.',
+   explanation:'The TikTok affiliate model is powerful because: content is native (feels organic, not like an ad), tracking is precise (every sale from the creator\'s link is attributed), and cost is performance-based.',
+   why:'Affiliates provide: incremental traffic from audiences you cannot reach through your own channels, social proof from trusted creators, review generation as a byproduct, and a performance-based cost structure.',
+   hrbp:'Shopee affiliate initiatives for Kiehl\'s ranking maintenance — affiliates drive not just direct sales but also review velocity and algorithm signals that compound into better organic ranking.',
+   mistakes:['Blanket affiliate recruitment — 500 affiliates with poor content produces worse results than 20 affiliates with high engagement audiences','Commission rates below market — affiliates deprioritise low-commission brands in favour of better-paying alternatives'],
+   scenario:'Brand wants to launch TikTok Shop affiliate campaign in 30 days. Budget is RM5,000. How do you deploy it? Answer: RM3,000 on product provision (12-15 micro-creators at RM200 product each), RM1,500 on creator performance top-ups for best performers mid-campaign, RM500 on management tools. Prioritise 20k-100k follower creators (higher engagement rate than mega-influencers).',
+   takeaway:'Affiliates = distributed, performance-based sales force. Quality over quantity. Commission must be competitive. Track performance at creator level and redeploy budget toward winners.'},
+
+  {id:'pm4', title:'CPAS and Cross-Platform Ads',
+   intro:'Brands that are present only on-platform for their ads are leaving a significant share of the funnel unaddressed.',
+   concept:'Cross-platform advertising extends e-commerce brand presence beyond the marketplace itself — using Google Shopping, Facebook CPAS (Collaborative Ads), and TikTok Ads to drive traffic into marketplace listings from off-platform discovery.',
+   rule:'CPAS (Collaborative Ads): Facebook and Instagram ads where the product catalogue is synced from Shopee — clicks go directly to the Shopee listing, and attribution is tracked at the order level. Most effective for remarketing to listing visitors who did not purchase.',
+   explanation:'The customer journey increasingly spans platforms: awareness on Instagram → research on Google → purchase on Shopee. Brands that only advertise on Shopee miss the awareness and consideration phases.',
+   why:'Off-platform traffic diversifies the acquisition mix and reduces dependency on marketplace algorithm changes. It also drives incremental reach beyond platform-native audiences.',
+   hrbp:'CPAS experience at Shopee: collaborative ads where brand provides the creative and Shopee provides the product feed — this combines brand creative quality with Shopee\'s purchase-intent audience data.',
+   mistakes:['Off-platform ads directed to a brand website instead of marketplace listings — losing the conversion convenience of marketplace checkout','No attribution model to understand which platforms are genuinely contributing to sales vs which are claiming credit'],
+   scenario:'Brand is spending RM20k/month on Shopee ads and wants to grow faster. How do you advise on CPAS integration? Answer: Add RM3-5k CPAS to start. Target: remarketing to Shopee listing visitors who did not convert. Expected ROAS for remarketing: 4-8×. This is the lowest-risk cross-platform expansion because you are targeting warm audiences.',
+   takeaway:'CPAS for remarketing is the lowest-risk cross-platform entry. Google Shopping for new audience discovery. TikTok for brand building and creator commerce. Each platform addresses a different funnel stage.'},
+],
+
+'livestream': [
+  {id:'ls1', title:'Livestream Commerce — The New Storefront',
+   intro:'Livestream is not just a sales channel — it is a real-time shopping experience that combines entertainment, product demonstration, and frictionless purchase.',
+   concept:'Livestream commerce on TikTok Shop and Shopee Live allows brands to sell products in real-time through video format — with hosts demonstrating products, interacting with viewers, and driving immediate purchases through limited-time offers.',
+   rule:'Livestream success factors: (1) Host quality (authentic, knowledgeable, engaging), (2) Product selection (hero SKUs with demonstrable value propositions), (3) Mechanic urgency (limited quantities, time-limited prices), (4) Traffic (pre-stream promotion and ads during stream), (5) Technical quality (lighting, sound, stable connection).',
+   explanation:'Conversion mechanics in livestream are fundamentally different from static listing purchase — it is impulse-driven, peer-influenced, and urgency-based. The host is the product. Production quality is the trust signal.',
+   why:'Livestream has higher conversion rates than static listings for products that benefit from demonstration (skincare, fashion, food) because it answers objections in real-time and creates social proof through viewer count and purchase notifications.',
+   hrbp:'Managing end-to-end livestream operations across 8 seller centres at Momentum Commerce — this means standardising the operational playbook across brands, hosts, and categories rather than reinventing it for each stream.',
+   mistakes:['Livestream without pre-stream traffic promotion — going live into an empty room','Host without product knowledge — viewer questions answered incorrectly destroy trust and suppress purchases'],
+   scenario:'First TikTok live session for a beauty brand. RM5,000 budget. How do you plan it? Answer: RM2,000 on pre-stream TikTok ad boost to drive viewers to the live, RM1,500 on host product training and mock session, RM1,500 on giveaway budget for engagement mechanics during stream. Target: 300+ peak concurrent viewers, 15%+ conversion rate on featured products.',
+   takeaway:'Livestream = entertainment plus product plus urgency. Host is the brand ambassador. Traffic before the stream determines peak concurrent viewers. Mechanics during the stream determine conversion. Train the host before you go live.'},
+
+  {id:'ls2', title:'TikTok Live Strategy — Content-Commerce Integration',
+   intro:'TikTok Live converts best when the commerce feels like content — not when the content feels like an ad.',
+   concept:'TikTok Live commerce strategy requires integrating entertainment content with product selling such that viewers stay engaged even when they are not in immediate purchase mode.',
+   rule:'TikTok Live content framework: (1) Hook — first 60 seconds: why should viewers stay? (2) Value delivery: product education, story, entertainment, (3) Offer reveal: mechanism with genuine urgency, (4) Social proof: testimonials, live purchase notifications, (5) Close: clear CTA and PIN the product.',
+   explanation:'TikTok\'s algorithm rewards livestream sessions with high watch time and engagement with additional organic reach. Sessions with 30% watch time and 200 comments get pushed to more viewers regardless of purchase conversion.',
+   why:'TikTok is a discovery platform. The consumer who discovers a product through an entertaining live session is a converted brand advocate, not just a transacting customer.',
+   hrbp:'Wardah TikTok Super Brand Day 2024 and 2025 both generating RM500k+: the consistency suggests a repeatable playbook — the SBD framework was systematised and improved between years, not re-invented from scratch.',
+   mistakes:['Live session that is purely a product listing read — no entertainment value, no retention','Going live only during SBD — TikTok algorithm requires consistent streaming cadence to build channel authority'],
+   scenario:'Brand\'s TikTok live conversion rate is 4% (industry average 8-12%). Most likely causes? Answer: (1) Host not trained in live selling techniques, (2) Products not demonstrable in video format, (3) No urgency mechanic — viewers watching without a reason to buy now, (4) Pre-stream traffic not generating warm audiences. Diagnose each before prescribing.',
+   takeaway:'TikTok Live = entertainment first, commerce second. Hook in 60 seconds. Deliver value before you sell. Create genuine urgency. Train the host. Stream consistently, not just for SBD.'},
+
+  {id:'ls3', title:'Livestream Operations at Scale',
+   intro:'Running one livestream is a creative effort. Running eight simultaneously across different seller centres is an operational system.',
+   concept:'Scaling livestream operations requires: standardised playbooks, trained host pools, operational checklists, real-time monitoring protocols, and post-session analytics review.',
+   rule:'Multi-centre livestream SOP: Pre-session (T-2hrs): inventory check, product pin setup, host briefing, tech test. During session: GMV tracking by PIC, comment moderation, real-time mechanic triggers. Post-session (T+1hr): debrief, conversion data analysis, inventory reconciliation.',
+   explanation:'The bottleneck in scaling livestream is host quality and consistency — not technical infrastructure. A systematic host development programme is the core operational investment.',
+   why:'Brands with consistent, high-quality livestream operations compound their TikTok channel authority over time — the algorithm rewards regular, high-engagement sessions with growing organic reach.',
+   hrbp:'Leading cross-functional teams across 8 seller centres — maintaining quality consistency when the operation is distributed requires standardised scripts, product pins, and post-session debriefs as the quality control mechanisms.',
+   mistakes:['Each seller centre operating with its own informal process — quality variance is high and unpredictable','No post-session debrief — the same conversion mistakes repeat across sessions'],
+   scenario:'You manage 8 TikTok channels for different brands. How do you maintain quality without being present on every stream? Answer: (1) Standardised pre-session checklist completed by PIC for each channel, (2) Remote monitoring dashboard showing concurrent viewers and GMV for all 8 streams simultaneously, (3) Weekly host performance scorecard, (4) Best practice clips library — sessions that worked are documented and shared.',
+   takeaway:'Scale livestream through systems, not supervision. Standardise the playbook. Train hosts consistently. Review data post-session. Quality at scale requires process, not heroics.'},
+],
+
+'data-analytics': [
+  {id:'da1', title:'GMV Dashboards — Building Visibility That Drives Decisions',
+   intro:'A dashboard that describes the past is a report. A dashboard that enables decisions about the future is a tool.',
+   concept:'GMV dashboards track: daily/weekly/monthly GMV vs target, GMV by channel and platform, conversion rate, average order value (AOV), traffic sources, and campaign attribution.',
+   rule:'Dashboard design principles: (1) Lead with the metric that matters most, (2) Show trends not just snapshots, (3) Make the exception visible (what is underperforming), (4) Enable drill-down from brand-level to SKU-level in two clicks.',
+   explanation:'Automated real-time dashboards using AI tools reduced reporting time and improved decision-making velocity — the business decision that was previously made weekly (reporting took a day to compile) can now be made daily.',
+   why:'In e-commerce, conditions change fast. A listing goes out of stock, a competitor runs a flash deal, a campaign underperforms. Real-time visibility allows real-time response.',
+   hrbp:'Automating real-time sales and performance dashboards using AI tools at Momentum Commerce contributed to 2× GMV growth rate over six months. Faster data leads to faster decisions leads to faster course correction leads to better outcomes.',
+   mistakes:['Dashboards built for reporting, not for action — no clear "what should I do" signal','Manual reporting processes that are weekly instead of real-time — decisions lag conditions by 5 days'],
+   scenario:'It is day 3 of a 7-day campaign. Dashboard shows CVR dropping from 6% to 3.8% while traffic is stable. What action does this trigger? Answer: Listing quality or pricing issue. Check: (1) Was pricing changed? (2) Did a competitor drop price? (3) Are hero SKUs in stock? (4) Did platform change the campaign landing page? Diagnose and fix same day.',
+   takeaway:'Dashboard = decision engine. Real-time beats weekly. Exception alerting beats status-reporting. Build dashboards around decisions, not metrics.'},
+
+  {id:'da2', title:'KPI Framework — Measuring What Moves the Business',
+   intro:'Tracking 20 KPIs is the same as tracking none — you see everything and act on nothing.',
+   concept:'A KPI framework identifies the 5-7 metrics that most directly drive business performance, and establishes targets, tracking frequency, and ownership for each.',
+   rule:'BD KPI stack in order of hierarchy: (1) GMV — is the strategy working? (2) Conversion Rate — does the listing convert traffic? (3) ROAS — is ad spend generating return? (4) Category rank — competitive position, (5) Seller health score — platform eligibility, (6) Account NPS — relationship quality.',
+   explanation:'The leading indicators (CVR, seller health, account satisfaction) predict future GMV. The lagging indicators (GMV, ROAS) confirm past performance. Strong BD managers pay as much attention to leading indicators as lagging ones.',
+   why:'Without a KPI framework, discussions about performance are opinion-based. With one, they are data-based — which leads to faster diagnosis and better decisions.',
+   hrbp:'Biweekly presentations to upper management at Momentum Commerce are only impactful if the KPI framework is clearly defined and consistently tracked, so each session presents movement on the same metrics.',
+   mistakes:['GMV as the only KPI — tells you what happened, not why, and not what to do','Changing KPIs every quarter — you cannot track progress against a moving target'],
+   scenario:'Brand GMV is flat month-over-month despite increasing ad spend by 30%. Which KPIs do you investigate? Answer: (1) ROAS — the additional ad spend may not be generating incremental GMV, (2) CVR — more traffic arriving but not converting suggests a listing or pricing issue, (3) Category rank — competitors may be outranking despite your higher spend.',
+   takeaway:'5-7 KPIs. Leading plus lagging indicators. Consistent tracking. GMV alone is insufficient. Build the framework once, track it every week, and make it the language of every performance conversation.'},
+
+  {id:'da3', title:'Using AI Tools in E-Commerce Analytics',
+   intro:'AI does not replace commercial judgment. It removes the manual work that was preventing you from exercising commercial judgment fast enough.',
+   concept:'AI-assisted analytics automates: data aggregation from multiple platforms, performance anomaly detection, campaign reporting, and trend analysis — freeing the account manager for interpretation and action.',
+   rule:'High-value AI applications in e-commerce BD: (1) Automated KPI dashboards from seller centre APIs, (2) Natural language queries on performance data, (3) Predictive inventory alerts, (4) Competitor price monitoring.',
+   explanation:'Automating real-time sales dashboards at Momentum Commerce using AI tools contributed to 2× GMV growth rate — because response time to performance signals dropped from days to hours, and analysis time dropped from hours to minutes.',
+   why:'E-commerce generates enormous amounts of data. Human analysis of all available data is impossible. AI-assisted analytics makes the signal visible in the noise.',
+   hrbp:'Practical AI tool stack for e-commerce analytics: Google Sheets with Apps Script for automation, Looker Studio or Power BI for visualisation, seller centre API integrations, and AI prompt-based analysis for interpreting trend data.',
+   mistakes:['Automating the wrong things — spending 3 days automating a report that takes 30 minutes manually','No interpretation layer — data dashboards without a narrative about what the data means are just faster reports'],
+   scenario:'You have 8 seller centres with different GMV tracking systems. How do you build a unified analytics view? Answer: (1) Identify common data layer (GMV, CVR, ROAS, stock level), (2) Pull via API into a central Looker Studio, (3) Standardise SKU naming for cross-centre comparison, (4) Set up automated daily email with exceptions (accounts underperforming vs target by more than 15%).',
+   takeaway:'Automate the collection. Apply judgment to the interpretation. Build exception alerts, not status reports. AI removes the manual work — you provide the commercial intelligence.'},
+],
+
+'pitching': [
+  {id:'pi1', title:'New Business Acquisition — The Hunt',
+   intro:'The best BD managers are systematic hunters — not waiting for warm inbound, but actively building a pipeline of qualified targets.',
+   concept:'New business acquisition involves: prospecting (identifying brands with online potential), qualifying (do they have budget, willingness, and strategic fit?), outreach, discovery, proposal, and close.',
+   rule:'Qualification framework (BANT): Budget (can they invest in platform and ads?), Authority (are you speaking to the decision-maker?), Need (do they have an e-commerce gap worth addressing?), Timing (is this the right point in their business cycle?).',
+   explanation:'At Shopee: acquiring and scaling 6 local brands into Shopee Mall, generating RM2.4M portfolio value within the first year — this was systematic acquisition. Each brand was qualified against clear criteria before significant time was invested.',
+   why:'Unqualified prospects consume as much time as qualified ones during pitching but convert at a fraction of the rate. Qualification is an efficiency multiplier.',
+   hrbp:'The Super Seller Campaign on 6.6 that achieved 4× GMV vs RM50k target was built on a qualified portfolio of sellers — not a broad, unselected base. Quality of the acquisition cohort determined the campaign outcome.',
+   mistakes:['No qualification process — presenting to anyone who will listen','Not identifying the real decision-maker — pitching to the brand manager when budget decisions are made by the marketing director'],
+   scenario:'You are prospecting a local skincare brand with strong social media but no Shopee Mall presence. How do you open the conversation? Answer: Lead with market data they do not have. "Skincare search volume on Shopee in your category grew 34% last quarter. Your competitors X and Y are generating RM500k/month in this channel. I\'d love to show you what this opportunity looks like for your specific brand."',
+   takeaway:'Qualify before you pitch. BANT: Budget, Authority, Need, Timing. Lead with market insights, not platform features. Arrive with data about their opportunity, not your product catalogue.'},
+
+  {id:'pi2', title:'The Pitch Deck — Structuring a Winning Proposal',
+   intro:'A great pitch deck tells a story — from where the client is now, to where they could be, to exactly how you will get them there.',
+   concept:'Winning pitch deck structure: (1) Market opportunity, (2) Brand assessment (where they are vs benchmark), (3) The opportunity gap, (4) Your solution, (5) Proof points (comparable case studies with results), (6) Commercial proposal.',
+   explanation:'The most common pitch deck failure: the solution section is 80% of the deck. The client does not care about your solution unless they first believe the opportunity is real and that you are credible enough to capture it.',
+   why:'The pitch deck is a trust-building document. Each section builds a different dimension of trust: market expertise, commercial acumen, strategic capability, and proven track record.',
+   hrbp:'Pitching for creative accounts at BBDO — winning the Pepsi Black, XPAX, Perodua, and Sime Darby pitches required exactly this structure: establish the opportunity, prove the understanding, demonstrate the capability, close with the ask.',
+   mistakes:['Opening with "we are the leading e-commerce agency in Malaysia" — client\'s response is "everyone says that"','No case studies — any pitch without proof points is promises, not evidence'],
+   scenario:'You have 20 minutes to pitch a luxury international brand on TikTok Shop. How do you structure the time? Answer: 3 mins: TikTok\'s luxury segment data. 4 mins: where their category is on TikTok today. 3 mins: the GMV gap. 7 mins: your specific strategy and comparable brand results. 3 mins: commercial proposal and Q&A.',
+   takeaway:'Pitch structure: opportunity → assessment → gap → solution → proof → proposal. Build trust in that sequence. Your solution is only credible after the opportunity is established.'},
+
+  {id:'pi3', title:'Handling Objections — Turning No Into Not Yet',
+   intro:'Objections are not rejections. They are requests for more information, for reassurance, or for a different framing.',
+   concept:'Objection handling is the practice of receiving client concerns without defensiveness, validating the concern, and addressing it with evidence or reframing.',
+   rule:'The objection handling formula: (1) Acknowledge, (2) Clarify — make sure you understand the real objection (often the stated objection is not the actual one), (3) Address with evidence not assertion, (4) Confirm the concern is resolved before moving on.',
+   explanation:'Common e-commerce BD objections decoded: "Your commission is too high" means "I am not yet convinced of the ROI." "We already have an agency" means "I do not see sufficient differentiation to justify switching." "We need to think about it" means "There is an unanswered concern I have not shared with you."',
+   why:'Every unhandled objection is a reason to say no. Handled objections become the reasons the client justifies saying yes.',
+   hrbp:'Writing and presenting pitch decks to win grants from MyCreative Ventures — grant pitches involve rigorous objection handling because the adjudicating panel is specifically looking for weaknesses. The same discipline applies in commercial pitching.',
+   mistakes:['Treating "I need to think about it" as a decision — it almost never is','Answering the stated objection without probing for the real one — fixes the symptom, not the cause'],
+   scenario:'"Your pricing is higher than the other agency we spoke to." How do you respond? Answer: "I understand, and pricing is an important consideration. Can I ask — when you compare the two proposals, what outcome differences are you expecting to see? I would like to make sure the comparison is on the same basis." Redirect to value, not price.',
+   takeaway:'Acknowledge, then clarify the real objection, then address with evidence, then confirm resolution. Never argue with an objection. The client who raises objections and receives genuine answers becomes a buyer.'},
+],
+
+'negotiation': [
+  {id:'neg1', title:'Commercial Negotiation — Principles, Not Tactics',
+   intro:'Negotiation based on tactics produces one-time wins. Negotiation based on principles produces long-term relationships.',
+   concept:'Commercial negotiation in e-commerce BD covers: commission rates, campaign investment levels, exclusivity terms, SLA commitments, and contract renewal terms.',
+   rule:'Principled negotiation: (1) Separate the people from the issue, (2) Focus on interests not positions, (3) Create options before deciding, (4) Insist on objective criteria (market rate, benchmarks, data).',
+   explanation:'Position-based negotiation ("we want 10%, you want 5%, we meet at 7.5%") leaves both parties feeling they lost. Interest-based negotiation creates value instead of just splitting it.',
+   why:'The best commercial arrangements are ones both parties are motivated to execute. A client who feels squeezed in negotiation is not fully committed to the relationship.',
+   hrbp:'Leading contract negotiations and renewals at Shopee — the most successful renewals were the ones where the new terms reflected the brand\'s growth in the relationship, not just Shopee\'s commercial objectives.',
+   mistakes:['Making the first concession too quickly — signals that initial position was not genuine','No BATNA (Best Alternative to Negotiated Agreement) defined before entering negotiation — you cannot negotiate from strength without knowing your walk-away point'],
+   scenario:'Brand partner wants to renew but requests a 30% commission reduction. Your business case supports 15%. How do you approach? Answer: "I can support a 15% adjustment based on the volume growth you\'ve delivered. To get to your 30% target, I would need to see the volume commitment that makes that margin structure viable — can we talk about what that looks like in the next 12 months?"',
+   takeaway:'Principled negotiation: interests over positions, options before decisions, objective criteria. Know your BATNA before you sit down. Never make the first concession under time pressure.'},
+
+  {id:'neg2', title:'Renewals — The Most Underrated Commercial Moment',
+   intro:'Most account managers treat renewals as administrative. The best treat them as the most important BD conversation of the year.',
+   concept:'Contract renewals are the highest-leverage commercial moment with an existing account — the point at which the relationship, commercial terms, and strategic alignment are all renegotiated simultaneously.',
+   rule:'Renewal strategy: (1) Start 90 days before expiry, (2) Conduct a value review (document what you delivered vs what was committed), (3) Prepare the forward proposal with new commercial terms AND new strategic commitments, (4) Never let a renewal happen passively.',
+   explanation:'Brands that renew passively — without reviewing what was delivered — are renewing out of inertia. A competitor who approaches at renewal time with a compelling proposal will win because the inertia-renewal brand had no renewal defence.',
+   why:'Renewals are the lowest-cost revenue. An existing client renewing at current or higher terms requires a fraction of the effort of acquiring a new client at the same value.',
+   hrbp:'Building renewal conversations 90 days in advance was a practice at Shopee for key FMCG Health & Beauty accounts — this allows time to course-correct and build a compelling forward proposal.',
+   mistakes:['Renewal conversations starting at T-14 days — too late to address competing proposals or rebuild any relationship deficit','Renewal proposal that is identical to the original contract — fails to reflect what was learned and what has changed'],
+   scenario:'Major account renewal is in 30 days. You just discovered they received a competitor proposal last week. Immediate actions? Answer: (1) Request an urgent meeting, do not wait for the scheduled renewal conversation. (2) Present your value delivery data for the past period. (3) Ask directly what the competitor offered and what matters most to the client for the next period. (4) Build a counter-proposal addressing their stated priorities.',
+   takeaway:'Renewals: start 90 days out, review value delivered, build forward proposal, meet proactively. A passive renewal is a vulnerable renewal. The best renewal defence is a client who feels so well-served they do not want alternatives.'},
+],
+
+'stakeholders': [
+  {id:'sh1', title:'Stakeholder Mapping — Knowing Who Matters and Why',
+   intro:'Every commercial decision involves multiple people. Knowing who they are, what they care about, and how they influence the decision is essential BD intelligence.',
+   concept:'Stakeholder mapping identifies everyone involved in a commercial decision — their role, influence, interests, and relationship with you.',
+   rule:'Stakeholder map elements: (1) Decision maker (who actually says yes), (2) Influencers (who shapes the decision maker), (3) Champions (who advocates for you internally), (4) Blockers (who has reasons to resist), (5) Gatekeepers (who controls access to the decision maker).',
+   explanation:'In e-commerce BD, a brand\'s "client" is rarely one person — it is typically a brand manager (day-to-day), marketing manager (campaign decisions), digital director (strategic alignment), and finance controller (budget approval).',
+   why:'Influence at the right stakeholder level determines whether deals close, renew, and grow. Operating only at the brand manager level while competitors build executive relationships is a structural disadvantage.',
+   hrbp:'Acting as the liaison between brand partners and agency at Momentum Commerce — this requires managing multiple stakeholder levels simultaneously: operational, strategic, and financial.',
+   mistakes:['Pitching to the brand manager when the marketing director controls the budget','Neglecting the internal champion — the person inside the client organisation who advocates for you when you are not in the room'],
+   scenario:'You have a strong relationship with the brand manager but your proposal has been stuck for 3 weeks without decision. What has likely happened? Answer: The proposal has moved up to a stakeholder you do not have a relationship with. Ask your brand manager: "Who else is reviewing this, and would it be helpful if I prepared a version tailored for that stakeholder?"',
+   takeaway:'Map the stakeholder ecosystem before every significant commercial engagement. Identify the real decision-maker, the champion, and the blockers. Relationships at multiple levels protect against single-point-of-contact risk.'},
+
+  {id:'sh2', title:'Managing Up — Presenting to Senior Stakeholders',
+   intro:'The ability to communicate upward — to leadership, to brand executives, to C-suite — determines the size of the decisions you are trusted with.',
+   concept:'Managing up means structuring information and recommendations in a way that is actionable at the seniority level of the audience.',
+   rule:'Senior stakeholder communication principles: (1) Lead with the conclusion, (2) One key message per slide or talking point, (3) Data as evidence not as the content, (4) Clear recommendation with rationale, (5) Decision request made explicit.',
+   explanation:'Biweekly presentations to upper management at Momentum Commerce — the discipline is: what is the one thing leadership needs to know, what action are we requesting, and what is the consequence of inaction? Everything else is appendix.',
+   why:'Leaders who trust your judgment give you more budget authority, faster approvals, and access to higher-value opportunities. Trust is built through consistently clear, credible communication.',
+   hrbp:'Writing and presenting pitch decks to government bodies for MyCreative Ventures grants — government presentations require even more rigorous structure because decision cycles are long and the pitch must stand alone without follow-up.',
+   mistakes:['Presenting 40 slides to an executive who has 15 minutes — demonstrating inability to prioritise','Arriving with a status update when the executive expects a decision request'],
+   scenario:'CMO asks for a 5-minute update on e-commerce performance. How do you structure it? Answer: "GMV this month: RM1.4M, 12% ahead of target. CVR improved to 5.8%. One concern: stock depletion rate suggests potential stockout risk on hero SKU in 8 days — I need a RM20k inventory purchase decision today to avoid campaign disruption." 5 minutes: number, trend, risk, decision needed.',
+   takeaway:'Conclusion first. One message. Data as evidence, not content. Explicit decision request. The executive wants your recommendation and the evidence behind it.'},
+
+  {id:'sh3', title:'Platform Relationships — Working With Shopee, TikTok, and Lazada',
+   intro:'Your relationship with the platform Category Manager is as commercially important as your relationship with the brand client.',
+   concept:'Marketplace Category Managers control access to: campaign feature slots, homepage real estate, promotional budgets, and traffic support. Building strong platform relationships directly impacts commercial performance.',
+   rule:'CM relationship management: (1) Regular check-ins (bi-weekly for strategic accounts), (2) Performance reporting (show the CM your brands are performing), (3) Campaign pipeline sharing (give them 60-90 days visibility), (4) Escalation management (resolve issues fast and professionally).',
+   explanation:'A brand with an active, data-rich, responsive agency partner gets better campaign slot consideration than a brand with an absent or reactive partner — because the CM knows the former will execute and the latter is a risk.',
+   why:'Platform relationship quality is a structural competitive advantage. Comparable brands competing for the same campaign slot will not get equal treatment if their agency relationships are unequal.',
+   hrbp:'Acting as liaison between brand partners and platforms at Shopee and Momentum Commerce — the platform relationship requires managing the CM\'s operational needs (performance data, campaign confirmations, escalation resolution) as proactively as the brand\'s commercial needs.',
+   mistakes:['Contacting the CM only when there is a problem — purely reactive relationship','No campaign pipeline sharing — CM discovers brand activities week-of, not 60 days out'],
+   scenario:'Your brand is competing with 3 others for a homepage banner slot during 9.9. How do you make the case to the CM? Answer: Present: (1) Historical campaign performance data vs category benchmark, (2) Planned investment level for 9.9, (3) Past conversion rate on comparable homepage placements. Make the CM\'s decision easy by making the business case clear.',
+   takeaway:'Platform relationships are strategic assets. CM relationship quality determines campaign slot access. Invest in the platform relationship as actively as the brand relationship.'},
+],
+
+'ops-supply': [
+  {id:'ops1', title:'Inventory Management for E-Commerce',
+   intro:'Inventory is the silent killer of e-commerce GMV. The campaign that sells out in hour 3 loses 85% of its potential.',
+   concept:'E-commerce inventory management covers: demand forecasting, safety stock calculation, reorder point setting, warehouse preparation for campaigns, and post-campaign reconciliation.',
+   rule:'Campaign inventory formula: Forecasted campaign GMV ÷ Average selling price × 1.5 safety buffer. For a RM1M campaign with RM80 ASP: 1,000,000 ÷ 80 × 1.5 = 18,750 units minimum.',
+   explanation:'The 1.5× buffer accounts for: forecast error, bundle SKU complexity, and the asymmetric cost of over- vs under-stock. Over-stock: modest carrying cost. Under-stock: lost GMV, negative reviews, and seller penalty points.',
+   why:'Stock-outs during campaigns destroy not just immediate GMV — they damage seller health scores, suppress future campaign eligibility, and generate negative buyer experience that impacts ratings.',
+   hrbp:'Responsible for purchasing and monitoring warehouse inventory at Momentum Commerce — this means owning the demand forecast and inventory position, not just receiving information about it.',
+   mistakes:['Inventory planning based on last year\'s actuals without adjustment for campaign growth expectations','Single SKU stockout crashing overall campaign — hero SKU inventory not tracked separately from long-tail'],
+   scenario:'Campaign brief predicts RM600k GMV. Category average ASP is RM65. Warehouse has 7,000 units confirmed. Is this sufficient? Answer: RM600k ÷ RM65 × 1.5 = 13,846 units needed. Current stock is 7,000 — a critical 7,000-unit shortfall. Immediate escalation to warehouse and brand procurement team required.',
+   takeaway:'Campaign inventory formula: GMV forecast ÷ ASP × 1.5. Apply it 30 days before every major campaign. A stockout is a preventable planning failure, not bad luck.'},
+
+  {id:'ops2', title:'Project Management for Marketing Teams — ClickUp and Beyond',
+   intro:'A marketing team without a project management system is a team where good ideas die in missed handoffs and unclear ownership.',
+   concept:'Project management tools (ClickUp, Asana, Notion) provide the operational infrastructure for campaign execution — task assignment, deadline tracking, dependency management, and cross-team communication.',
+   rule:'Marketing campaign project structure: (1) Master campaign task with launch date, (2) Sub-tasks by workstream (content, ops, platform, ads, inventory) with individual owners and deadlines, (3) Dependencies mapped (ads cannot go live before listings are live), (4) Status visible to all stakeholders.',
+   explanation:'Streamlining marketing execution by managing project timelines and team collaboration in ClickUp at Momentum Commerce — the value is not the tool itself but the discipline it enforces: every task has an owner, every task has a deadline, and no one can claim they did not know about a dependency.',
+   why:'Campaign delivery failures are almost never caused by lack of capability — they are caused by missed handoffs, unclear ownership, and late discovery of blockers. Project management eliminates these.',
+   hrbp:'For a Super Brand Day with 8 workstreams (content, listing, ads, livestream, inventory, platform, affiliate, fulfilment) operating in parallel — a project management tool is not optional. Without it, coordination costs consume more time than execution.',
+   mistakes:['Task lists without owners — tasks owned by everyone get done by no one','No dependency mapping — content team delivers assets 3 days before launch without knowing ads team needed them 10 days before'],
+   scenario:'SBD is in 14 days. A project audit reveals 3 critical path tasks with no owner assigned (hero listings update, ad creative sign-off, inventory confirmation). What do you do in the next 24 hours? Answer: Assign owners in ClickUp. Set deadlines (all 3 must be done by T-7). Schedule a 15-minute daily standup for the remaining 14 days. Escalate immediately if any critical path task slips.',
+   takeaway:'Every task: owner, deadline, dependencies visible. Campaign project management is not bureaucracy — it is what makes complex, multi-team executions deliver reliably.'},
+
+  {id:'ops3', title:'Cross-Functional Stakeholder Alignment',
+   intro:'The best commercial strategy fails when the supply chain team, finance, and warehouse are operating on different assumptions.',
+   concept:'Cross-functional alignment means ensuring that the commercial plan (what the BD team wants to sell) is coherent with the operational plan (what operations can fulfil) and the financial plan (what finance has approved).',
+   rule:'Cross-functional sync meeting agenda (monthly minimum): (1) Commercial: campaign forecast and GMV targets, (2) Operations: inventory position and fulfilment capacity, (3) Finance: budget approvals and cash flow implications, (4) Platform: campaign slot confirmations.',
+   explanation:'Streamlining communications between brand, warehouse, finance, and performance marketing teams at Momentum Commerce — this is the exact scope of cross-functional alignment. The BD manager is not just managing the client relationship; they are managing the internal system that delivers on the client commitment.',
+   why:'A GMV commitment to a brand that cannot be fulfilled due to an inventory shortfall discovered too late damages: the brand relationship, the agency reputation, and seller health scores.',
+   hrbp:'The most common cross-functional failure: finance approves a reduced inventory budget 3 weeks before campaign without realising it has already been ordered. Transparent, documented cross-functional planning prevents this.',
+   mistakes:['Commercial targets set without operations sign-off — a GMV commitment that ops cannot fulfil','Finance treated as a sign-off function rather than a planning partner'],
+   scenario:'Brand confirms RM800k campaign target. Operations says maximum fulfilment capacity is RM500k. Finance has approved RM500k budget. Resolution? Answer: Three options: (1) Align target to RM500k operational capacity, (2) Expand operational capacity, (3) Increase finance allocation with a business case showing RM800k ROI. Document the decision and rationale.',
+   takeaway:'Commercial targets must be operationally validated before they are communicated to the client. Cross-functional alignment is not nice-to-have — it is what prevents public commitments from becoming private disasters.'},
+],
+
+'content-seo': [
+  {id:'cs1', title:'Listing Optimisation — The Foundation of Marketplace Visibility',
+   intro:'A great product with a poor listing is an invisible product. Listing quality is the most controllable variable in marketplace performance.',
+   concept:'Listing optimisation maximises every element of a marketplace product listing to rank higher in search, convert more visitors to buyers, and communicate brand quality.',
+   rule:'Listing optimisation checklist: (1) Title — primary keyword in first 30 characters, secondary keywords in body, brand name, key attribute, (2) Main image — white background, product fills 85%+ of frame, (3) Carousel images — benefit-led not spec-led, (4) Description — answer the buyer\'s top 3 questions, embed keywords naturally, (5) Attributes — fill every available field.',
+   explanation:'A listing that does not clearly communicate what the product does, who it is for, and why it is better than alternatives will have a high bounce rate — which signals the algorithm that the listing does not satisfy searcher intent, suppressing future ranking.',
+   why:'Every listing improvement compounds: better listing → better CVR → better ranking → more organic traffic → more sales. The investment in listing quality has perpetual return.',
+   hrbp:'Creating and updating optimised product listings across 8 seller centres — a systematic monthly audit of top 20 SKUs per brand against a quality checklist maintains standards at scale.',
+   mistakes:['Generic manufacturer images as main marketplace listing image — fails to communicate benefit','No keyword research — listing title built around brand terminology, not buyer search language'],
+   scenario:'A hero SKU has 15% conversion on a standalone brand site but only 4% on Shopee. Same product, similar price. What do you investigate? Answer: (1) Main image quality comparison, (2) Title keyword relevance for Shopee search queries, (3) Competitor listings in the same search results, (4) Review volume and rating — Shopee buyers weight reviews more heavily than website visitors.',
+   takeaway:'Listing quality is the most controllable GMV lever. Keyword-led title, benefit-led images, question-answering description, all attributes filled. Monthly audit of top SKUs. Better listings compound over time.'},
+
+  {id:'cs2', title:'Content Strategy for E-Commerce — Platform-Native vs Repurposed',
+   intro:'Content repurposed from TV ads does not convert on TikTok. Platform-native content requires a completely different creative brief.',
+   concept:'E-commerce content strategy covers: platform-native short-form video (TikTok, Reels), marketplace listing content (images, descriptions), live commerce scripts, and affiliate creator briefs.',
+   rule:'Content framework by platform: TikTok → Hook 3 seconds, Problem 5 seconds, Product as solution 10 seconds, Social proof 5 seconds, CTA 2 seconds. Total 25 seconds native ad. Shopee carousel → Benefit 1, Benefit 2, Lifestyle, Dimensions, Social Proof.',
+   explanation:'The TikTok Super Brand Day content that drove RM500k GMV was not a repurposed TV commercial — it was TikTok-native content (short-form, entertainment-led, product-demonstrating) specifically developed for the platform\'s consumption behaviour.',
+   why:'Platform-native content outperforms repurposed content by 3-5× on engagement and conversion because it matches how the platform\'s audience expects to consume information.',
+   hrbp:'Managing brands including Wardah (TikTok-first), Kiehl\'s (Shopee-search-first), and Emina (youth-oriented, social-first) — each requires a fundamentally different content brief despite selling in the same broad category.',
+   mistakes:['Same creative brief for TikTok and Shopee — treating platforms as interchangeable','Long-form product videos on TikTok — loses the audience in the first 3 seconds'],
+   scenario:'Skincare brand has beautiful 60-second YouTube videos. How do you brief the TikTok adaptation? Answer: Do not adapt — brief fresh. Extract: (1) The most visually arresting 3-second moment for the hook, (2) The single most compelling product benefit, (3) One before/after visual if available, (4) User language from comments on their existing content. Build a TikTok-native script from these elements.',
+   takeaway:'Platform-native content does not equal repurposed content. Brief for platform behaviour, not brand preference. TikTok: hook, problem, solution, proof, CTA in 25 seconds. Shopee carousel: benefit-led, social proof, practical information.'},
+],
+
+'leadership': [
+  {id:'le1', title:'Leading a BD Team — From Individual Contributor to Leader',
+   intro:'The transition from BD practitioner to BD team lead requires a fundamental shift: from doing the work to enabling others to do the work better.',
+   concept:'BD team leadership involves: target-setting and performance management, coaching and skill development, pipeline governance, escalation management, and culture-building.',
+   rule:'New BD team lead priorities in the first 90 days: (1) Know each person\'s strengths, gaps, and motivations, (2) Establish clear targets and tracking cadence, (3) Build a coaching rhythm (weekly 1:1 focused on skill development, not just activity review), (4) Define the standard (what does good look like on this team?).',
+   explanation:'Leading a team of 5 Relationship Managers at Shopee — the promotion to assistant team lead within 10 months came from demonstrating not just individual performance but the ability to make others more effective.',
+   why:'A BD leader\'s impact multiplies through the team. A great individual BD practitioner delivers 1× their own output. A great BD leader delivers 5-10× through their team.',
+   hrbp:'The Shopee L&D initiative — developing onboarding and training for the BD team — reflects the same principle: the leader\'s leverage comes from building capabilities in others, not from being the best individual performer.',
+   mistakes:['Team lead who is still doing the BD work themselves rather than coaching — the team underperforms because the leader is not leading','Performance management limited to activity metrics (calls made, visits done) rather than outcome metrics (pipeline quality, conversion rate, account growth)'],
+   scenario:'A BD executive on your team has strong client relationships but weak pipeline discipline — consistently missing follow-up deadlines and losing deals due to slow response. How do you coach? Answer: Skill gap, not motivation gap. Build a pipeline management SOP together. Set weekly pipeline review as a standing 30-minute 1:1 agenda item. Track deals lost due to response delay — make the data visible.',
+   takeaway:'Team lead = multiply through others. Know your team: motivations, strengths, gaps. Build a coaching rhythm. Your success is your team\'s growth trajectory, not your own GMV.'},
+
+  {id:'le2', title:'Onboarding New BD Hires — Setting Them Up to Win',
+   intro:'A BD hire that takes 6 months to become productive is a BD hire who was not properly onboarded.',
+   concept:'BD onboarding covers: product and platform knowledge, client portfolio immersion, process training (campaigns, QBRs, account reviews), and tool proficiency (CRM, dashboards, project management).',
+   rule:'BD onboarding timeline: Week 1 (platform and product knowledge), Week 2 (shadow senior BD on 5 client calls), Week 3 (take 2 client calls with supervisor support), Week 4 (independent management of 3 lower-tier accounts with weekly supervision). By week 8: independently managing full Tier 3 portfolio.',
+   explanation:'Developing L&D efforts for BD Team new hire onboarding at Shopee — the investment in structured onboarding reduces time-to-productivity and reduces early attrition that typically happens when new hires feel unsupported.',
+   why:'Structured onboarding cuts time-to-first-win by 40-50%. The first win is psychologically important — it builds confidence and commitment.',
+   hrbp:'Designing onboarding is itself a BD skill — it requires understanding what a new BD hire needs to know (in what order) to become effective, which requires deep knowledge of what the role actually demands.',
+   mistakes:['Onboarding as shadowing only — new hire watches but never does, which does not build skills','No clear milestone markers — new hire does not know when they are expected to be independent on what activities'],
+   scenario:'New BD hire joins. Strong communication skills but zero e-commerce background. What is their week 1? Answer: Day 1-2: Use Shopee, TikTok Shop, and Lazada as a buyer to understand the consumer experience. Day 3: Seller centre walkthrough with a senior on a real account. Day 4: Case study review of 3 brand accounts (one win, one loss, one in progress). Day 5: Shadow 3 client calls.',
+   takeaway:'Onboarding sequence: knowledge → observation → supported action → independent action. Structured milestones, not open-ended immersion. First independent win is the target for week 4-6.'},
+
+  {id:'le3', title:'Building a High-Performance BD Culture',
+   intro:'Culture is not a values document. It is what the team does when the manager is not watching.',
+   concept:'BD culture is shaped by: the standard set for performance and accountability, how wins and losses are discussed, how new skills are developed, and the specific behaviours that are rewarded.',
+   rule:'High-performance BD culture components: (1) Clear, public targets (everyone knows the number), (2) Regular public recognition of the right behaviours not just big wins, (3) Honest post-mortems on lost deals without blame, (4) Continuous learning built into the weekly rhythm.',
+   explanation:'At Shopee: undergoing regular communications, leadership, and data analytics training as part of an ongoing HRBP upskilling initiative — the culture of continuous learning is not a personality trait, it is a structured programme.',
+   why:'BD teams without a learning culture plateau. The market changes (new platforms, new campaign types, new buyer behaviours) and practitioners who stopped learning become practitioners who stop winning.',
+   hrbp:'Jetcetera\'s album release strategy — securing grants, managing budgets, coordinating teams, pitching to media — demonstrates the same BD cultural skills: structured learning, public accountability to targets, and relentless execution against a plan.',
+   mistakes:['Celebrating only large GMV wins — ignoring the behaviours that create them','No post-mortem on lost deals — missing the learning opportunity that every loss provides'],
+   scenario:'Your team just lost a major account to a competitor. How do you run the post-mortem? Answer: (1) Facts only — what happened, when, what signals were missed? (2) No blame — what could the process have done differently? (3) Committed changes — what specifically will we do differently in the next 3 renewal conversations? (4) Document and distribute to the whole team.',
+   takeaway:'Culture is built in the weekly rhythm: targets, recognition, post-mortems, learning. What you reward and what you review tells the team what actually matters.'},
+],
+
+'strategy': [
+  {id:'st1', title:'Account Growth Planning — The 12-Month Commercial Plan',
+   intro:'A brand account without a 12-month growth plan is being managed tactically, not strategically. Tactics deliver this quarter. Strategy delivers this year and next.',
+   concept:'The 12-month commercial growth plan maps: GMV targets by quarter, planned campaigns, platform expansion roadmap, content investment calendar, and the specific growth levers that will deliver against each target.',
+   rule:'Growth plan framework: (1) Where are we now? (current GMV, ranking, share), (2) Where do we want to go? (12-month targets), (3) What are the growth levers? (platform expansion, ad spend, content, affiliate, campaigns), (4) What are the dependencies? (inventory, budget, content), (5) What are the risks? (competitor moves, platform changes).',
+   explanation:'The account growth plan converts your BD relationship from operational to strategic. A brand manager who receives a detailed 12-month plan treats that agency partner as a strategic adviser, not a service provider.',
+   why:'Account plans create accountability and alignment — both internally and with the client. They make your value contribution visible in advance, not just in retrospect.',
+   hrbp:'Identifying and pursuing opportunities for business expansion within existing brand partnerships at Momentum Commerce — this is the account growth planning discipline: systematically identifying white space and building plans to capture it.',
+   mistakes:['Account plans built once at year start and never reviewed — stale plans are worse than no plans','Plans that are activity lists, not outcome commitments — 20 tasks with no GMV attachment'],
+   scenario:'It is January. You manage a skincare brand doing RM800k/month. Brand wants 50% growth to RM1.2M/month by December. Build the one-page growth thesis. Answer: RM400k/month incremental sourced from: RM150k TikTok Shop launch, RM150k increased Double Digit campaign investment, RM100k from affiliate programme launch. Each lever is quantified, has a cost, and has an owner.',
+   takeaway:'Account plan = current state plus target plus growth levers plus dependencies plus risks. Quantify each lever. Review quarterly. A plan that is reviewed and updated is a living strategy.'},
+
+  {id:'st2', title:'Portfolio Strategy — Managing a Book of Business',
+   intro:'A portfolio of brand accounts is a financial asset. Managing it requires the same analytical discipline as managing an investment portfolio.',
+   concept:'Portfolio strategy involves: GMV concentration analysis, growth rate assessment by account, risk identification (accounts at churn risk), and resource allocation across the portfolio.',
+   rule:'Portfolio health check: (1) GMV concentration — if >60% comes from 1-2 accounts, you have concentration risk, (2) Growth rate distribution — how many accounts are growing, flat, or declining? (3) Churn risk scoring, (4) White space — which accounts have the most unrealised growth potential?',
+   explanation:'Managing 8-figure GMV portfolios at Momentum Commerce — the portfolio mindset is essential at this scale. Individual account tactics are insufficient when you are responsible for a portfolio with different growth profiles and risk levels.',
+   why:'Portfolio-level thinking enables better resource allocation, earlier churn detection, and proactive growth planning across the full book of business.',
+   hrbp:'A portfolio manager who spends 80% of their time on the bottom 20% of accounts by GMV has a resource allocation problem. Portfolio strategy makes the allocation decision explicit and defensible.',
+   mistakes:['No portfolio-level analysis — managing each account individually without visibility of portfolio concentration','GMV concentration allowed to reach 70%+ from one account — losing that account is a business-critical event'],
+   scenario:'You manage 12 brand accounts. Portfolio review: 3 accounts = 70% of GMV, 4 accounts have been flat for 6 months, 2 accounts are in early churn stage. Priority matrix for next quarter? Answer: Priority 1: Protect the 3 flagship accounts (defensive investment). Priority 2: Address the 2 early churn accounts (retention intervention). Priority 3: Diagnose the 4 flat accounts (growth plan or rationalisation). Deprioritise low-growth accounts to free up capacity.',
+   takeaway:'Portfolio = investment portfolio. Concentration risk, growth distribution, churn risk, white space. Allocate resources based on portfolio analysis, not by who shouts loudest. Review quarterly at portfolio level.'},
+
+  {id:'st3', title:'Market Intelligence — Staying Ahead of the Category',
+   intro:'The BD manager who knows the category better than the brand\'s own team is the one who gets trusted with the brand\'s strategy.',
+   concept:'Market intelligence in e-commerce BD covers: category trend monitoring, competitor analysis, platform algorithm updates, consumer behaviour shifts, and emerging channel developments.',
+   rule:'Market intelligence inputs: (1) Marketplace category dashboards, (2) Competitor listing monitoring (track price changes, new SKU launches, review velocity), (3) Social listening, (4) Platform communications (CM briefings, policy updates).',
+   explanation:'Conducting market research to identify emerging trends at Shopee — this is ongoing market intelligence as a standard BD discipline, not a one-off research project.',
+   why:'Market intelligence is the BD manager\'s primary source of consultative value. The advice you give is only as good as the market context you understand.',
+   hrbp:'Nielsen background in retail measurement and FMCG data — the discipline of data-driven market analysis transfers directly to e-commerce BD. Contextualising a brand\'s performance against category benchmarks is a rare and valuable skill.',
+   mistakes:['Category updates only when something goes wrong — reactive intelligence','Market intelligence not incorporated into client conversations — BD manager holds insights but does not surface them proactively'],
+   scenario:'Category data shows SPF products in your brand\'s skincare category grew 45% YoY while standard moisturisers are flat. Your brand has zero SPF SKUs. How do you use this intelligence? Answer: Present the data in the next QBR: "SPF is the fastest-growing subcategory in skincare on Shopee. Your portfolio has no exposure to this trend. Here is what the whitespace looks like in terms of GMV opportunity, and here are the competitors currently occupying it."',
+   takeaway:'Market intelligence = your primary source of consultative value. Monitor category trends, competitor moves, platform changes. Surface intelligence proactively. The best insight is the one the client did not know they needed.'},
+
+  {id:'st4', title:'Forecasting and Target-Setting — The Commercial Planning Discipline',
+   intro:'A target without a forecast model is motivation. A forecast with a model is a plan.',
+   concept:'Commercial forecasting involves: baseline modelling (what will happen if we do nothing different?), growth scenario modelling (what happens with specific investment levels?), and sensitivity analysis (what are the assumptions this forecast is most dependent on?).',
+   rule:'Forecast model inputs: trailing 3-month GMV average (baseline), planned campaign calendar (event uplift factors), planned ad spend change (traffic impact), seasonal index (category seasonality adjustment), and planned mechanic changes (conversion rate impact).',
+   explanation:'At Shopee and Momentum Commerce, target-setting without a bottoms-up model is exposed in biweekly reviews — when targets are not met and the team cannot explain why, it usually means the target was set aspirationally, not analytically.',
+   why:'Credible forecasts build trust with brand partners and leadership. A BD manager who consistently meets or can credibly explain variance is trusted with larger budgets.',
+   hrbp:'Biweekly presentations to upper management on brand and project progress — these presentations only work if the forecast was grounded in the first place, so that performance vs forecast has a meaningful interpretation.',
+   mistakes:['Top-down targets distributed without bottoms-up validation — impossible targets create demoralised teams','No variance analysis — targets missed without explanation means the same mistake repeats next quarter'],
+   scenario:'Brand target is RM1.5M for November. Your bottoms-up model shows RM1.1M. How do you handle the gap with leadership? Answer: Present your model with assumptions. "To reach RM1.5M, we need either: additional RM30k in ads increasing traffic by 15%, an additional homepage feature slot negotiated with CM, or 20% deeper voucher mechanic. Here is the cost and ROI of each option."',
+   takeaway:'Forecast bottoms-up first. Identify the gap to target. Quantify the levers needed to close the gap. Present the options with cost and ROI. Make targets stretchable through investment, not wishful thinking.'},
+],
+
+};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let currentCat = null;
+let currentTopic = null;
+let navStack = [];   // ['home', 'category', 'topic']
+let searchQ = '';
+
+// Load saved state
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem('sbd_v3')||'{}'); } catch(e){}
+function save() { try { localStorage.setItem('sbd_v3', JSON.stringify(saved)); } catch(e){} }
+
+// ═══════════════════════════════════════════════
+// COMPUTED
+// ═══════════════════════════════════════════════
+function allTopics() {
+  const arr = [];
+  for (const [catId, topics] of Object.entries(TOPICS)) {
+    topics.forEach(t => arr.push({...t, catId}));
+  }
+  return arr;
+}
+
+function catProgress(catId) {
+  const topics = TOPICS[catId] || [];
+  if (!topics.length) return 0;
+  const done = topics.filter(t => saved[t.id]?.r).length;
+  return Math.round(done / topics.length * 100);
+}
+
+function globalProgress() {
+  const all = allTopics();
+  if (!all.length) return {pct:0, read:0, bkm:0, total:all.length};
+  const read = all.filter(t => saved[t.id]?.r).length;
+  const bkm = all.filter(t => saved[t.id]?.b).length;
+  return {pct: Math.round(read/all.length*100), read, bkm, total:all.length};
+}
+
+function topicsInCat(catId) { return TOPICS[catId] || []; }
+
+// ═══════════════════════════════════════════════
+// FORMATTING
+// ═══════════════════════════════════════════════
+function fmt(s) {
+  if (!s) return '';
+  return s
+    .split(/\*\*(.+?)\*\*/g)
+    .map((seg,i) => i%2===1
+      ? '<strong>'+seg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</strong>'
+      : seg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))
+    .join('')
+    .replace(/\*(.+?)\*/g, (_,t) => '<em>'+t+'</em>');
+}
+
+function hl(s) {
+  if (!searchQ || !s) return fmt(s);
+  const re = new RegExp('('+searchQ.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+  return fmt(s).replace(re,'<mark>$1</mark>');
+}
+
+// ═══════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ═══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════════
+function showHome() {
+  currentCat = null; currentTopic = null; searchQ = '';
+  const si = document.getElementById('searchInput'); if(si) si.value = '';
+  renderHome();
+  showScreen('home');
+}
+
+function renderHome() {
+  const p = globalProgress();
+
+  // ── Static zone (hero, progress, search) — render once, never touched by search
+  const staticEl = document.getElementById('home-static');
+  if (staticEl && !staticEl.dataset.rendered) {
+    staticEl.dataset.rendered = '1';
+    staticEl.innerHTML = `
+  <div class="home-hero">
+    <div class="hero-tag">🚀 Professional Learning</div>
+    <div class="hero-h">The <em>Sales & BD</em> Playbook</div>
+    <div class="hero-p">Master e-commerce business development, marketplace strategy, performance marketing, and account management — built from real 8-figure GMV experience.</div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n">${p.total}</span><span class="hstat-l">Topics</span></div>
+      <div class="hstat"><span class="hstat-n">${CATS.length}</span><span class="hstat-l">Modules</span></div>
+      <div class="hstat"><span class="hstat-n">${p.read}</span><span class="hstat-l">Read</span></div>
+      <div class="hstat" style="margin-left:auto">
+        <button class="saved-hero-btn" onclick="showBookmarks()" title="Saved topics">
+          <span class="saved-ico">🔖</span>
+          <span class="saved-ct">${p.bkm}</span>
+          <span class="hstat-l">Saved</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="prog-strip">
+    <div class="prog-row"><span class="prog-label">Overall Progress</span><span class="prog-pct">${p.pct}%</span></div>
+    <div class="prog-track"><div class="prog-fill" style="width:${p.pct}%"></div></div>
+    <div class="prog-meta">
+      <div class="pmeta"><div class="pmeta-dot" style="background:var(--green)"></div>${p.read} Read</div>
+      <div class="pmeta"><div class="pmeta-dot" style="background:var(--green2)"></div>${p.bkm} Saved</div>
+    </div>
+  </div>
+  <div class="persistent-search" id="persistentSearch">
+    <div class="psearch-inner">
+      <span class="sico">⌕</span>
+      <input id="searchInput" type="search" placeholder="Search topics…" autocomplete="off">
+    </div>
+  </div>`;
+  } else if (staticEl) {
+    // Update progress numbers without re-rendering (keeps input alive)
+    const pctEl = staticEl.querySelector('.prog-pct');
+    const fillEl = staticEl.querySelector('.prog-fill');
+    const readEl = staticEl.querySelectorAll('.pmeta')[0];
+    const bkmEl = staticEl.querySelectorAll('.pmeta')[1];
+    const savedCt = staticEl.querySelector('.saved-ct');
+    if (pctEl) pctEl.textContent = p.pct + '%';
+    if (fillEl) fillEl.style.width = p.pct + '%';
+    if (readEl) readEl.innerHTML = `<div class="pmeta-dot" style="background:var(--green)"></div>${p.read} Read`;
+    if (bkmEl) bkmEl.innerHTML = `<div class="pmeta-dot" style="background:var(--green2)"></div>${p.bkm} Saved`;
+    if (savedCt) savedCt.textContent = p.bkm;
+  }
+
+  // ── Dynamic zone (modules grid) — always safe to replace
+  renderModules();
+}
+
+function renderModules() {
+  const dynEl = document.getElementById('home-dynamic');
+  if (!dynEl) return;
+  let html = `<div class="sec-lbl">Modules</div><div class="cat-grid">`;
+  CATS.forEach(cat => {
+    const pct = catProgress(cat.id);
+    const cnt = topicsInCat(cat.id).length;
+    html += `
+    <div class="ccard" style="--ca:${cat.accent}" onclick="showCategory('${cat.id}')">
+      <div class="ccard-top">
+        <span class="ccard-icon">${cat.icon}</span>
+        <span class="ccard-count">${cnt}</span>
+      </div>
+      <div class="ccard-name">${cat.name}</div>
+      <div class="ccard-pb"><div class="ccard-pf" style="width:${pct}%;background:${cat.accent}"></div></div>
+    </div>`;
+  });
+  html += `</div><div class="spacer"></div>`;
+  dynEl.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// CATEGORY
+// ═══════════════════════════════════════════════
+function showCategory(catId) {
+  currentCat = catId;
+  renderCategory();
+  showScreen('category');
+}
+
+function renderCategory() {
+  const cat = CATS.find(c => c.id === currentCat);
+  const topics = topicsInCat(currentCat);
+  const pct = catProgress(currentCat);
+  const sc = document.getElementById('screen-category');
+
+  let html = `
+  <div class="back-bar">
+    <button class="back-btn-big" onclick="showHome()">
+      <span class="arr">←</span> All Topics
+    </button>
+    <span class="back-bar-title">${pct}% complete</span>
+  </div>
+  <div style="padding:16px 16px 12px;border-bottom:1px solid var(--bdr)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <span style="font-size:26px">${cat.icon}</span>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--tx)">${cat.name}</div>
+        <div style="font-size:12px;color:var(--tx3);margin-top:2px">${topics.length} topics</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="flex:1;height:4px;background:var(--bg5);border-radius:2px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${cat.accent};border-radius:2px;transition:width .4s"></div>
+      </div>
+      <span style="font-size:11.5px;color:${cat.accent};font-weight:600">${pct}%</span>
+    </div>
+  </div>
+  <div class="tlist">`;
+
+  topics.forEach((t, i) => {
+    const st = saved[t.id] || {};
+    const dotClass = st.r ? 'read' : st.b ? 'bkm' : '';
+    html += `
+    <div class="titem" onclick="showTopic('${currentCat}','${t.id}')">
+      <span class="titem-num">${i+1}</span>
+      <div class="titem-body">
+        <div class="titem-title">${t.title}</div>
+        <div class="titem-intro">${t.intro}</div>
+      </div>
+      <div class="titem-right">
+        <div class="rdot ${dotClass}"></div>
+        <span class="titem-arr">›</span>
+      </div>
+    </div>`;
+  });
+
+  html += `</div><div class="spacer"></div>`;
+  sc.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// TOPIC READING PAGE
+// ═══════════════════════════════════════════════
+function showTopic(catId, topicId) {
+  currentCat = catId;
+  currentTopic = topicId;
+  renderTopic();
+  showScreen('topic');
+}
+
+function renderTopic() {
+  const cat = CATS.find(c => c.id === currentCat);
+  const topics = topicsInCat(currentCat);
+  const idx = topics.findIndex(t => t.id === currentTopic);
+  const topic = topics[idx];
+  if (!topic) { showCategory(currentCat); return; }
+
+  const st = saved[topic.id] || {};
+  const isRead = !!st.r;
+  const isBkm = !!st.b;
+  const prevT = topics[idx-1];
+  const nextT = topics[idx+1];
+
+  let html = `
+  <div class="back-bar">
+    <button class="back-btn-big" onclick="showCategory('${currentCat}')">
+      <span class="arr">←</span> All Topics
+    </button>
+    <span class="back-bar-title">${cat.name}</span>
+  </div>
+  <div class="reading-hero">
+    <div class="reading-cat-tag">
+      <div class="dot" style="background:${cat.accent}"></div>
+      ${cat.name}
+    </div>
+    <div class="reading-title">${topic.title}</div>
+    <div class="reading-intro">${topic.intro}</div>
+  </div>`;
+
+  // Content sections
+  html += `<div class="rcontent">`;
+
+  // Concept
+  if (topic.concept) {
+    html += `<div class="rsection">
+      <div class="rsec-label">Concept</div>
+      <div class="rsec-body">${fmt(topic.concept)}</div>
+    </div>`;
+  }
+
+  // Rule
+  if (topic.rule) {
+    html += `<div class="rsection">
+      <div class="rsec-label">The Rule</div>
+      <div class="rsec-body">${fmt(topic.rule)}</div>
+    </div>`;
+  }
+
+  // Diagram
+  if (topic.diagram) {
+    html += `<div class="rsection">
+      <div class="diagram-wrap">${topic.diagram}</div>
+    </div>`;
+  }
+
+  // Explanation
+  if (topic.explanation) {
+    html += `<div class="rsection">
+      <div class="rsec-label">Explanation</div>
+      <div class="rsec-body">${fmt(topic.explanation)}</div>
+    </div>`;
+  }
+
+  // Why it exists
+  if (topic.why) {
+    html += `<div class="rsection">
+      <div class="rsec-label">Why This Rule Exists</div>
+      <div class="rsec-body">${fmt(topic.why)}</div>
+    </div>`;
+  }
+
+  // HRBP angle
+  if (topic.hrbp) {
+    html += `<div class="rsection">
+      <div class="rsec-label">HR Perspective</div>
+      <div class="rsec-body">${fmt(topic.hrbp)}</div>
+    </div>`;
+  }
+
+  // Common mistakes
+  if (topic.mistakes && topic.mistakes.length) {
+    html += `<div class="rsection">
+      <div class="rsec-label">Common Mistakes</div>
+      <ul class="mistake-list">`;
+    topic.mistakes.forEach(m => {
+      html += `<li><span class="mico">⚠️</span>${fmt(m)}</li>`;
+    });
+    html += `</ul></div>`;
+  }
+
+  // Scenario
+  if (topic.scenario) {
+    const ansIdx = topic.scenario.indexOf('Answer:');
+    if (ansIdx > -1) {
+      const q = topic.scenario.substring(0, ansIdx).trim();
+      const a = topic.scenario.substring(ansIdx).trim();
+      html += `<div class="rsection">
+        <div class="rsec-label">Scenario</div>
+        <div class="scenario">${fmt(q)}<div class="scenario-ans">${fmt(a)}</div></div>
+      </div>`;
+    } else {
+      html += `<div class="rsection">
+        <div class="rsec-label">Scenario</div>
+        <div class="scenario">${fmt(topic.scenario)}</div>
+      </div>`;
+    }
+  }
+
+  // Law reference
+  if (topic.law) {
+    html += `<div class="rsection">
+      <div class="rsec-label">Legal Reference</div>
+      <span class="lawchip">${fmt(topic.law)}</span>
+    </div>`;
+  }
+
+  // Key takeaway
+  if (topic.takeaway) {
+    html += `<div class="rsection">
+      <div class="takeaway-lbl">Key Takeaway</div>
+      <div class="takeaway">${fmt(topic.takeaway)}</div>
+    </div>`;
+  }
+
+  html += `</div>`;
+
+  // Actions bar (sticky)
+  html += `
+  <div class="reading-actions">
+    <button class="btn-alltopics" onclick="showCategory('${currentCat}')">
+      ← Topics
+    </button>
+    <button class="btn-read ${isRead?'done':''}" onclick="toggleRead('${topic.id}')">
+      ${isRead ? '✓ Read' : '○ Read'}
+    </button>
+    <button class="btn-bkm ${isBkm?'on':''}" onclick="toggleBkm('${topic.id}')" title="Bookmark">🔖</button>
+    <button class="btn-nav-next" onclick="showTopic('${currentCat}','${nextT?.id}')" ${!nextT?'disabled':''}>
+      ${idx+1}/${topics.length} ${nextT ? '· Next →' : '· End'}
+    </button>
+  </div>`;
+
+  // Topic position indicator
+  html += `<div class="tnav"><span>${idx+1} of ${topics.length}</span><strong>${cat.name}</strong></div>`;
+  html += `<div class="spacer"></div>`;
+
+  document.getElementById('screen-topic').innerHTML = html;
+}
+
+function toggleRead(topicId) {
+  saved[topicId] = saved[topicId] || {};
+  saved[topicId].r = !saved[topicId].r;
+  save();
+  renderTopic();
+}
+
+function toggleBkm(topicId) {
+  saved[topicId] = saved[topicId] || {};
+  saved[topicId].b = !saved[topicId].b;
+  save();
+  renderTopic();
+}
+
+// ═══════════════════════════════════════════════
+// BOOKMARKS
+// ═══════════════════════════════════════════════
+function showBookmarks() {
+  renderBookmarks();
+  showScreen('bookmarks');
+}
+
+function renderBookmarks() {
+  const all = allTopics();
+  const bkm = all.filter(t => saved[t.id]?.b);
+  const read = all.filter(t => saved[t.id]?.r);
+  const sc = document.getElementById('screen-bookmarks');
+
+  let html = `
+  <div class="back-bar">
+    <button class="back-btn-big" onclick="showHome()">
+      <span class="arr">←</span> Home
+    </button>
+  </div>
+  <div style="padding:16px 16px 12px;border-bottom:1px solid var(--bdr)">
+    <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tx);margin-bottom:4px">Saved Topics</div>
+    <div style="font-size:12.5px;color:var(--tx3)">${bkm.length} bookmarked · ${read.length} read</div>
+  </div>`;
+
+  if (!bkm.length) {
+    html += `<div class="empty-state">
+      <div class="empty-ico">🔖</div>
+      <div class="empty-msg">No bookmarks yet.<br>Tap 🔖 on any topic to save it here.</div>
+    </div>`;
+  } else {
+    html += `<div class="tlist">`;
+    bkm.forEach(t => {
+      const cat = CATS.find(c => c.id === t.catId);
+      html += `
+      <div class="titem" onclick="showTopic('${t.catId}','${t.id}')">
+        <span class="titem-num" style="color:${cat?.accent}">${cat?.icon}</span>
+        <div class="titem-body">
+          <div class="titem-title">${t.title}</div>
+          <div class="titem-intro">${cat?.name}</div>
+        </div>
+        <div class="titem-right">
+          <div class="rdot ${saved[t.id]?.r?'read':'bkm'}"></div>
+          <span class="titem-arr">›</span>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (read.length > 0) {
+    html += `
+    <div class="sec-lbl">Read Topics (${read.length})</div>
+    <div class="tlist">`;
+    read.forEach(t => {
+      const cat = CATS.find(c => c.id === t.catId);
+      html += `
+      <div class="titem" onclick="showTopic('${t.catId}','${t.id}')">
+        <span class="titem-num" style="color:${cat?.accent}">${cat?.icon}</span>
+        <div class="titem-body">
+          <div class="titem-title">${t.title}</div>
+          <div class="titem-intro">${cat?.name}</div>
+        </div>
+        <div class="titem-right">
+          <div class="rdot read"></div>
+          <span class="titem-arr">›</span>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div class="spacer"></div>`;
+  sc.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════════
+// Delegated search — results render inline, input keeps focus
+document.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'searchInput') {
+    searchQ = e.target.value.trim();
+    renderHomeWithSearch(); // always stay on home screen, just swap content
+  }
+});
+
+// Renders home screen with search results inline (no screen switch)
+function renderHomeWithSearch() {
+  if (searchQ.length === 0) {
+    renderModules();
+    return;
+  }
+  const q = searchQ.toLowerCase();
+  const all = allTopics();
+  const results = all.filter(t =>
+    t.title.toLowerCase().includes(q) ||
+    (t.intro||'').toLowerCase().includes(q) ||
+    (t.concept||'').toLowerCase().includes(q) ||
+    (t.rule||'').toLowerCase().includes(q) ||
+    (t.explanation||'').toLowerCase().includes(q) ||
+    (t.law||'').toLowerCase().includes(q)
+  );
+  const dynEl = document.getElementById('home-dynamic');
+  if (!dynEl) return;
+  let html = `<div class="search-meta-inline">${results.length} result${results.length!==1?'s':''} for <strong>"${searchQ}"</strong></div>`;
+  if (!results.length) {
+    html += `<div class="empty-state"><div class="empty-ico">🔍</div><div class="empty-msg">No topics found.<br>Try a different keyword.</div></div>`;
+  } else {
+    html += `<div class="tlist">`;
+    results.forEach(t => {
+      const cat = CATS.find(c => c.id === t.catId);
+      html += `<div class="titem" onclick="showTopic('${t.catId}','${t.id}')">
+        <span class="titem-num" style="color:${cat?.accent}">${cat?.icon}</span>
+        <div class="titem-body"><div class="titem-title">${hl(t.title)}</div><div class="titem-intro">${hl(t.intro)}</div></div>
+        <div class="titem-right"><div class="rdot ${saved[t.id]?.r?'read':saved[t.id]?.b?'bkm':''}"></div><span class="titem-arr">›</span></div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+  html += `<div class="spacer"></div>`;
+  dynEl.innerHTML = html;
+}
+
+function renderSearch() {
+  const q = searchQ.toLowerCase();
+  const all = allTopics();
+  const results = all.filter(t =>
+    t.title.toLowerCase().includes(q) ||
+    (t.intro||'').toLowerCase().includes(q) ||
+    (t.concept||'').toLowerCase().includes(q) ||
+    (t.rule||'').toLowerCase().includes(q) ||
+    (t.explanation||'').toLowerCase().includes(q) ||
+    (t.law||'').toLowerCase().includes(q)
+  );
+
+  let html = `
+  <div class="back-bar">
+    <button class="back-btn-big" onclick="showHome();document.getElementById('searchInput').value='';searchQ='';">
+      <span class="arr">←</span> All Topics
+    </button>
+    <span class="back-bar-title">${results.length} result${results.length!==1?'s':''}</span>
+  </div>`;
+  if (!results.length) {
+    html += `<div class="empty-state"><div class="empty-ico">🔍</div><div class="empty-msg">No topics found.<br>Try a different keyword.</div></div>`;
+  } else {
+    html += `<div class="tlist">`;
+    results.forEach(t => {
+      const cat = CATS.find(c => c.id === t.catId);
+      html += `
+      <div class="titem" onclick="showTopic('${t.catId}','${t.id}')">
+        <span class="titem-num" style="color:${cat?.accent}">${cat?.icon}</span>
+        <div class="titem-body">
+          <div class="titem-title">${hl(t.title)}</div>
+          <div class="titem-intro">${hl(t.intro)}</div>
+        </div>
+        <div class="titem-right">
+          <div class="rdot ${saved[t.id]?.r?'read':saved[t.id]?.b?'bkm':''}"></div>
+          <span class="titem-arr">›</span>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+  document.getElementById('screen-search').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+
+showHome();
+</script>
+</body>
+</html>
